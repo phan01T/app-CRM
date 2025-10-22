@@ -1,0 +1,116 @@
+<div class="calendar-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3 class="sidebar-title">👥 User Manager</h3>
+
+    <div class="user-list">
+      <div
+        class="user-card"
+        *ngFor="let user of users()"
+        [class.inactive]="!user.active"
+        (click)="toggleUser(user)"
+      >
+        <img [src]="user.avatar" alt="avatar" class="avatar" />
+        <div class="info">
+          <h4>{{ user.name }}</h4>
+          <p>{{ user.role }}</p>
+        </div>
+        <span class="status-dot" [style.background]="user.color"></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Calendar Section -->
+  <section class="calendar-section">
+    <div class="calendar-container">
+      <!-- Header -->
+      <div class="calendar-nav">
+        <div class="nav-left">
+          <button (click)="prevMonth()">« Tháng trước</button>
+          <button class="btn-today" (click)="today()">Hôm nay</button>
+          <button (click)="nextMonth()">Tháng sau »</button>
+        </div>
+
+        <h3>{{ currentDate() }}</h3>
+
+        <input type="month" (change)="onMonthChange($event)" />
+      </div>
+
+      <!-- FullCalendar -->
+      <full-calendar [options]="calendarOptions" #calendarRef></full-calendar>
+    </div>
+
+    <!-- Create Event Form -->
+    <div class="create-event">
+      <h3>🗓️ Tạo sự kiện</h3>
+      <form (ngSubmit)="saveEvent()" #form="ngForm" class="event-form">
+        <div class="row">
+          <div class="field">
+            <label>Tiêu đề</label>
+            <input
+              type="text"
+              [(ngModel)]="newEvent.title"
+              name="title"
+              required
+              placeholder="Cuộc gọi khách hàng"
+            />
+          </div>
+          <div class="field">
+            <label>Ngày</label>
+            <input
+              type="date"
+              [(ngModel)]="newEvent.date"
+              name="date"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Thời gian</label>
+            <input
+              type="time"
+              [(ngModel)]="newEvent.time"
+              name="time"
+              placeholder="09:00"
+            />
+          </div>
+          <div class="field">
+            <label>Loại</label>
+            <select [(ngModel)]="newEvent.type" name="type">
+              <option>Cuộc gọi</option>
+              <option>Cuộc hẹn</option>
+              <option>Email</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Khách hàng</label>
+            <input
+              type="text"
+              [(ngModel)]="newEvent.customer"
+              name="customer"
+              placeholder="Saigon Foods"
+            />
+          </div>
+          <div class="field">
+            <label>Nhắc nhở</label>
+            <select [(ngModel)]="newEvent.reminder" name="reminder">
+              <option>15 phút trước</option>
+              <option>30 phút trước</option>
+              <option>1 giờ trước</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button type="button" class="btn-cancel">Hủy</button>
+          <button type="submit" class="btn-save">💾 Lưu sự kiện</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

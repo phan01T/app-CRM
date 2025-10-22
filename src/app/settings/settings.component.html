@@ -1,0 +1,216 @@
+<div class="settings-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <ul>
+      <li
+        *ngFor="let tab of menuItems"
+        [class.active]="activeTab() === tab"
+        (click)="setTab(tab)"
+      >
+        {{ tab }}
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- 🔹 CHUNG -->
+    <section *ngIf="activeTab() === 'Chung'" class="card">
+      <h3>Cài đặt chung</h3>
+
+      <div class="form-grid">
+        <div>
+          <label>Tên công ty</label>
+          <input type="text" value="ACME JSC" />
+        </div>
+        <div>
+          <label>Miền</label>
+          <input type="text" value="crm.acme.vn" />
+        </div>
+        <div>
+          <label>Ngôn ngữ mặc định</label>
+          <select>
+            <option selected>Tiếng Việt</option>
+            <option>English</option>
+          </select>
+        </div>
+        <div>
+          <label>Múi giờ</label>
+          <input type="text" value="Asia/Ho_Chi_Minh (GMT+7)" />
+        </div>
+        <div>
+          <label>Định dạng ngày</label>
+          <input type="text" value="DD/MM/YYYY" />
+        </div>
+        <div>
+          <label>Logo</label>
+          <input type="file" />
+        </div>
+      </div>
+
+      <h4>Người dùng & Quyền</h4>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Người dùng</th>
+            <th>Vai trò</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="https://i.pravatar.cc/40?img=1" /> Anh Nguyen</td>
+            <td>Quản trị viên</td>
+            <td><span class="status active">Kích hoạt</span></td>
+          </tr>
+          <tr>
+            <td><img src="https://i.pravatar.cc/40?img=2" /> Lan Pham</td>
+            <td>Nhân viên kinh doanh</td>
+            <td><span class="status active">Kích hoạt</span></td>
+          </tr>
+          <tr>
+            <td><img src="https://i.pravatar.cc/40?img=3" /> Minh Tran</td>
+            <td>Kế toán</td>
+            <td><span class="status pending">Chờ mail</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 🔹 QUYỀN & ĐỒNG Ý -->
+    <section *ngIf="activeTab() === 'Quyền & Đồng ý'" class="card">
+      <h3>Tuân thủ & Đồng ý</h3>
+
+      <div class="toggles-grid">
+        <div class="toggle-row">
+          <span>Yêu cầu đồng ý marketing</span>
+          <app-toggle-switch
+            [initial]="toggles.marketingConsent()"
+          ></app-toggle-switch>
+        </div>
+        <div class="toggle-row">
+          <span>Tự động chèn liên kết lead</span>
+          <app-toggle-switch
+            [initial]="toggles.autoLinkLeads()"
+          ></app-toggle-switch>
+        </div>
+        <div class="toggle-row">
+          <span>Lưu lịch sử quyền sở hữu</span>
+          <app-toggle-switch
+            [initial]="toggles.ownerSync()"
+          ></app-toggle-switch>
+        </div>
+        <div class="toggle-row">
+          <span>Ẩn dữ liệu nhạy cảm</span>
+          <app-toggle-switch
+            [initial]="toggles.hideSensitiveData()"
+          ></app-toggle-switch>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🔹 EMAIL & SMTP -->
+    <section *ngIf="activeTab() === 'Email & SMTP'" class="card">
+      <h3>Email & SMTP</h3>
+
+      <div class="form-grid">
+        <div><label>Máy chủ SMTP</label><input value="smtp.gmail.com" /></div>
+        <div><label>Cổng</label><input value="587" /></div>
+        <div>
+          <label>Bảo mật</label>
+          <select>
+            <option>TLS</option>
+            <option>SSL</option>
+          </select>
+        </div>
+        <div>
+          <label>Tên người dùng</label>
+          <input value="sales@company.com" />
+        </div>
+        <div>
+          <label>Mật khẩu ứng dụng</label>
+          <input type="password" value="********" />
+        </div>
+        <div>
+          <label>Mặc định "Gửi như"</label>
+          <input value="Nhóm Kinh doanh" />
+        </div>
+        <div>
+          <label>Hỗ trợ tiếng Việt</label>
+          <select>
+            <option selected>Bật mã hóa UTF-8</option>
+            <option>Tắt</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🔹 HÓA ĐƠN & THUẾ -->
+    <section *ngIf="activeTab() === 'Hóa đơn & Thuế'" class="card">
+      <h3>Hóa đơn & Thuế</h3>
+
+      <div class="form-grid">
+        <div>
+          <label>Tiền tệ</label>
+          <select>
+            <option>VND - Đồng</option>
+            <option>USD - Dollar</option>
+          </select>
+        </div>
+        <div>
+          <label>Thuế suất mặc định</label>
+          <input type="text" value="10%" />
+        </div>
+        <div>
+          <label>Ký hiệu hóa đơn</label>
+          <input type="text" value="INV" />
+        </div>
+        <div>
+          <label>Mẫu hóa đơn</label>
+          <select>
+            <option>Chuẩn</option>
+            <option>Tùy chỉnh</option>
+          </select>
+        </div>
+        <div>
+          <label>Tự động gửi hóa đơn</label>
+          <select>
+            <option>Sau khi duyệt</option>
+            <option>Thủ công</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🔹 TÍCH HỢP -->
+    <section *ngIf="activeTab() === 'Tích hợp'" class="card">
+      <h3>Tích hợp</h3>
+
+      <div class="form-grid">
+        <div>
+          <label>Google OAuth</label>
+          <input type="text" value="client_id" />
+        </div>
+        <div>
+          <label>Webhook URL</label>
+          <input type="text" value="https://api.acme.vn/hooks/crm" />
+        </div>
+        <div>
+          <label>Zapier</label>
+          <button class="btn-outline">Kết nối</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-secondary">Hủy</button>
+        <button class="btn-primary">Lưu thay đổi</button>
+      </div>
+    </section>
+
+    <!-- 🔹 BẢO MẬT -->
+    <section *ngIf="activeTab() === 'Bảo mật'" class="card">
+      <h3>Bảo mật</h3>
+      <p>Đang phát triển...</p>
+    </section>
+  </div>
+</div>

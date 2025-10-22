@@ -1,0 +1,21 @@
+<nav class="sidebar" [class.dark]="theme==='dark'" [class.light]="theme==='light'"
+     [class.collapsed]="variant()==='collapsed'" [class.open]="open">
+
+  <!-- Brand -->
+  <div class="brand">
+   
+    <span class="brand-text" *ngIf="!isCollapsed()">Main Menu</span>
+    <button class="hamburger" aria-label="Menu" (click)="toggleSidebar()">
+      <svg viewBox="0 0 24 24" class="i"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <!-- Expandable Menu Component -->
+  <app-expandable-menu
+  [items]="menuItems"
+  [icons]="icons"          
+  [isCollapsed]="isCollapsed">
+</app-expandable-menu>
+
+
+</nav>

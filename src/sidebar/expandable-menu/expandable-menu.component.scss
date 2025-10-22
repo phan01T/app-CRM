@@ -1,0 +1,99 @@
+.menu { 
+  list-style: none; 
+  margin: 10px; 
+  padding: 0; 
+  overflow: auto; 
+   background: rgba(255, 255, 255, 0.15); /* màu trắng trong suốt */
+  backdrop-filter: blur(10px);            /* làm mờ nền phía sau */
+  -webkit-backdrop-filter: blur(10px); 
+}
+
+.menu-item {
+  margin-bottom: 6px; /* khoảng cách giữa các button */
+
+  a, button {
+    width: 100%;
+    border: none; 
+    background: transparent; 
+    color: inherit;
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
+    padding: 10px 12px; 
+    border-radius: 8px;
+    cursor: pointer; 
+    text-decoration: none; 
+    font-size: 14px;        /* đồng nhất cỡ chữ */
+    font-weight: 400;       /* không in đậm */
+    line-height: 1.4;
+
+    .icon svg { 
+      width: 18px; 
+      height: 18px; 
+      display: block; 
+    }
+
+    &:hover { 
+      background: var(--hover-dark, #7e8084); 
+    }
+  } 
+
+  .submenu {
+    list-style: none; 
+    padding: 4px 0 4px 20px; 
+    margin: 0;
+
+    li a { 
+      display: flex;
+      align-items: center;
+      gap: 8px; 
+      padding: 8px 12px; 
+      border-radius: 6px; 
+      font-size: 14px;      /* cùng size với menu chính */
+      font-weight: 400;     /* không in đậm */
+      text-decoration: none; 
+      opacity: .9; 
+    }
+  }
+}
+
+/* text label */
+.menu .label { 
+  font-size: 14px;        /* đồng bộ size */
+  font-weight: 400;       /* không in đậm */
+  color: #1a1a1b;         /* màu chữ mặc định */
+}
+
+:host-context(.sidebar.dark) .menu .label { 
+  color: #e5e7eb; 
+}
+
+/* active */
+.menu a.active {
+  background: rgba(63,81,128,.15);
+  box-shadow: inset 0 0 0 1px rgba(230,231,234,.35);
+}
+
+/* collapsed */
+:host-context(.sidebar.collapsed) .menu a,
+:host-context(.sidebar.collapsed) .menu button { 
+  justify-content: center; 
+  padding: 10px 8px; 
+}
+
+:host-context(.sidebar.collapsed) .menu .label { 
+  display: none; 
+}
+
+:host-context(.sidebar.collapsed) .menu .icon { 
+  width: 40px; 
+  display: inline-grid; 
+  place-items: center; 
+}
+
+:host-context(.sidebar.collapsed) .menu .icon svg { 
+  width: 20px; 
+  height: 20px; 
+}
+.icon { width: 20px; height: 20px; display: inline-flex; }
+.icon svg { width: 100%; height: 100%; display: block; }

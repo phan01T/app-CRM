@@ -1,0 +1,347 @@
+<div class="contacts-container">
+  <!-- ===============================
+       📋 DANH SÁCH HỒ SƠ KHÁCH HÀNG
+       =============================== -->
+  <div class="header-section">
+    <h3>Danh sách hồ sơ khách hàng</h3>
+    <button class="btn primary" (click)="openModal()">👤 Tạo hồ sơ</button>
+  </div>
+
+  <table class="profile-table" *ngIf="profiles.length > 0; else noProfiles">
+    <thead>
+      <tr>
+        <th>Họ và tên</th>
+        <th>Email</th>
+        <th>Điện thoại</th>
+        <th>Công ty</th>
+        <th>Vai trò</th>
+        <th>Nguồn</th>
+        <th>Nhân sự liên quan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of profiles">
+        <td>{{ p.fullName }}</td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.phone }}</td>
+        <td>{{ p.company }}</td>
+        <td>{{ p.role }}</td>
+        <td>{{ p.source }}</td>
+        <td>
+          <div class="mini-avatars" *ngIf="p.employees?.length > 0">
+            <img
+              *ngFor="let e of p.employees"
+              [src]="e.avatar"
+              [title]="e.name"
+              class="avatar-sm"
+            />
+          </div>
+          <span *ngIf="!p.employees?.length">—</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noProfiles>
+    <p class="empty">Chưa có hồ sơ nào được tạo.</p>
+  </ng-template>
+
+  <!-- ===============================
+       📊 THỐNG KÊ KHÁCH HÀNG
+       =============================== -->
+  <div class="stats">
+    <div class="card" *ngFor="let s of stats">
+      <div class="label">{{ s.label }}</div>
+      <div class="value">{{ s.value | number }}</div>
+    </div>
+  </div>
+
+  <!-- ===============================
+       🪟 MODAL TẠO HỒ SƠ KHÁCH HÀNG
+       =============================== -->
+
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal wide">
+      <div class="modal-header">
+        <h3>Tạo hồ sơ khách hàng mới</h3>
+        <button class="close" (click)="closeModal()">✖</button>
+      </div>
+
+      <form [formGroup]="profileForm" class="modal-body">
+        <!-- Thông tin cơ bản -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Họ và tên</label>
+            <input
+              formControlName="fullName"
+              class="form-control"
+              placeholder="VD: Nguyễn Thảo"
+            />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              formControlName="email"
+              class="form-control"
+              placeholder="example@company.com"
+            />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Điện thoại</label>
+            <input
+              formControlName="phone"
+              class="form-control"
+              placeholder="+84 90 123 4567"
+            />
+          </div>
+          <div class="form-group">
+            <label>Công ty</label>
+            <input
+              formControlName="company"
+              class="form-control"
+              placeholder="Công ty ABC"
+            />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Vai trò</label>
+            <input
+              formControlName="role"
+              class="form-control"
+              placeholder="Trưởng phòng Mua hàng"
+            />
+          </div>
+          <div class="form-group">
+            <label>Nguồn</label>
+            <input
+              formControlName="source"
+              class="form-control"
+              placeholder="Website / Liên hệ"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ghi chú ban đầu</label>
+          <textarea
+            formControlName="note"
+            class="form-control"
+            rows="2"
+            placeholder="Quan tâm giải pháp CRM..."
+          ></textarea>
+        </div>
+
+        <!-- Cơ hội liên quan -->
+        <h4>Tạo nhanh cơ hội liên quan</h4>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Tên cơ hội</label>
+            <input
+              formControlName="oppName"
+              class="form-control"
+              placeholder="Triển khai CRM cho Công ty ABC"
+            />
+          </div>
+          <div class="form-group">
+            <label>Giai đoạn</label>
+            <input
+              formControlName="stage"
+              class="form-control"
+              placeholder="Khảo sát / Đàm phán / Ký hợp đồng"
+            />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Giá trị ước tính</label>
+            <input
+              formControlName="amount"
+              class="form-control"
+              placeholder="250,000,000 VND"
+            />
+          </div>
+          <div class="form-group">
+            <label>Thời hạn</label>
+            <input
+              formControlName="deadline"
+              type="date"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <!-- Chọn nhân sự liên quan -->
+        <h4>Chọn nhân sự liên quan</h4>
+        <table class="employee-table mini">
+          <thead>
+            <tr>
+              <th>Chọn</th>
+              <th>Tên</th>
+              <th>Chức danh</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of employees">
+              <td>
+                <input
+                  type="checkbox"
+                  (change)="onCheckboxChange(emp, $event)"
+                />
+              </td>
+              <td>
+                <div class="emp-info">
+                  <img [src]="emp.avatar" class="avatar" />
+                  <div>
+                    <div class="name">{{ emp.name }}</div>
+                    <div class="owner">Owner: {{ emp.owner }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>{{ emp.role }}</td>
+              <td>{{ emp.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+
+      <div class="modal-footer">
+        <button class="btn" (click)="closeModal()">Hủy</button>
+        <button class="btn primary" (click)="saveProfile()">
+          💾 Lưu hồ sơ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
+     👥 NHÂN SỰ LIÊN QUAN (QUẢN LÝ TỔNG)
+     =============================== -->
+  <h3>Nhân sự liên quan (Quản lý tổng)</h3>
+
+  <div class="toolbar">
+    <button class="btn light" (click)="openGroupManager()">
+      👥 Quản lý nhóm
+    </button>
+    <button class="btn primary" (click)="openEmployeeModal()">
+      ➕ Thêm nhân sự
+    </button>
+  </div>
+
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Chức danh</th>
+        <th>Phòng ban</th>
+        <th>Email</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>
+          <div class="emp-info">
+            <img [src]="emp.avatar" class="avatar" />
+            <div>
+              <div class="name">{{ emp.name }}</div>
+              <div class="owner">Owner: {{ emp.owner }}</div>
+            </div>
+          </div>
+        </td>
+        <td>{{ emp.role }}</td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.email }}</td>
+        <td class="actions">
+          <button class="btn view" (click)="onView(emp)">👁 Xem</button>
+          <button class="btn edit" (click)="openEmployeeModal(emp)">
+            ✏️ Sửa
+          </button>
+          <button class="btn delete" (click)="deleteEmployee(emp)">
+            🗑 Xóa
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="footer">Hiển thị {{ employees.length }} nhân sự trong hệ thống</p>
+
+  <!-- ===============================
+     🪟 MODAL THÊM / SỬA NHÂN SỰ
+     =============================== -->
+  <div class="modal-backdrop" *ngIf="showEmployeeModal">
+    <div class="modal small">
+      <div class="modal-header">
+        <h3>{{ editingEmployee ? "Cập nhật nhân sự" : "Thêm nhân sự mới" }}</h3>
+        <button class="close" (click)="closeEmployeeModal()">✖</button>
+      </div>
+
+      <form
+        [formGroup]="employeeForm"
+        (ngSubmit)="saveEmployee()"
+        class="modal-body"
+      >
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input
+            formControlName="name"
+            class="form-control"
+            placeholder="VD: Nguyễn Văn A"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Chức danh</label>
+          <input
+            formControlName="role"
+            class="form-control"
+            placeholder="VD: Sales Manager"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Phòng ban</label>
+          <input
+            formControlName="department"
+            class="form-control"
+            placeholder="VD: Sales"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input
+            formControlName="email"
+            class="form-control"
+            placeholder="example@company.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Owner</label>
+          <input
+            formControlName="owner"
+            class="form-control"
+            placeholder="VD: Bạn / Minh / Huyền..."
+          />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn" (click)="closeEmployeeModal()">
+            Hủy
+          </button>
+          <button type="submit" class="btn primary">
+            💾 {{ editingEmployee ? "Lưu thay đổi" : "Lưu nhân sự" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

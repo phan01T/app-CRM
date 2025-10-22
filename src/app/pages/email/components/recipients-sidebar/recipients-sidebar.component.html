@@ -1,0 +1,85 @@
+<div class="sidebar-wrapper">
+  <!-- 📥 NHẬP CSV -->
+  <label class="btn-import">
+    📥 Nhập CSV
+    <input
+      type="file"
+      accept=".csv"
+      (change)="handleCsvUpload($event)"
+      hidden
+    />
+  </label>
+
+  <!-- ✅ Preview CSV -->
+  <div *ngIf="showPreview()" class="csv-preview">
+    <h5>📄 Xem trước file: {{ fileName() }}</h5>
+    <table>
+      <thead>
+        <tr>
+          <th>Tên</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of csvPreview()">
+          <td>{{ r.name }}</td>
+          <td>{{ r.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="actions">
+      <button class="btn-confirm" (click)="confirmImport()">
+        ✅ Nhập ({{ importCount() }})
+      </button>
+      <button class="btn-cancel" (click)="cancelImport()">✖ Hủy</button>
+    </div>
+  </div>
+
+  <!-- ✅ Hiển thị thông báo nhập -->
+  <div *ngIf="!showPreview() && importCount() !== null" class="import-result">
+    ✅ Đã nhập {{ importCount() }} người mới!
+  </div>
+
+  <!-- 🧩 NHÓM NGƯỜI NHẬN -->
+  <div class="sidebar">
+    <div class="sidebar-head">
+      <h3>📧 Nhóm người nhận</h3>
+      <button class="btn-add" (click)="toggleAddForm()">
+        {{ showAddForm() ? "✖ Hủy" : "＋ Thêm nhóm" }}
+      </button>
+    </div>
+
+    <!-- ➕ Form thêm nhóm -->
+    <div class="add-form" *ngIf="showAddForm()">
+      <input
+        type="text"
+        [ngModel]="newGroupName()"
+        (ngModelChange)="newGroupName.set($event)"
+        placeholder="Tên nhóm..."
+        class="input"
+      />
+
+      <input
+        type="color"
+        [ngModel]="newGroupColor()"
+        (ngModelChange)="newGroupColor.set($event)"
+      />
+
+      <button class="btn-save" (click)="addGroup()">Lưu</button>
+    </div>
+
+    <!-- 📋 Danh sách nhóm -->
+    <ul class="group-list">
+      <li *ngFor="let g of groups()" [style.border-left-color]="g.color">
+        <span class="group-name">
+          {{ g.name }}
+          <small>({{ g.count }})</small>
+        </span>
+        <button class="btn-del" (click)="deleteGroup(g.id)">🗑</button>
+      </li>
+    </ul>
+
+    <!-- 📊 Tổng -->
+    <div class="total">Tổng: {{ totalRecipients() }} người</div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "balance": [
+    {
+      "name": "Gross",
+      "series": [
+        { "name": "Jan", "value": 5 },
+        { "name": "Feb", "value": 15 }
+      ]
+    },
+    {
+      "name": "Net total",
+      "series": [
+        { "name": "Jan", "value": 12 },
+        { "name": "Feb", "value": 8 }
+      ]
+    }
+  ],
+  "sales": [
+    { "name": "Jan", "value": 12 },
+    { "name": "Feb", "value": 19 }
+  ],
+  "marketShare": [
+    { "name": "US", "value": 38.6 },
+    { "name": "Canada", "value": 22.5 }
+  ],
+  "products": [
+    { "name": "Visa analysis", "delta": 244 },
+    { "name": "CRM Platform", "delta": 408 }
+  ]
+}

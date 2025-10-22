@@ -1,0 +1,133 @@
+<div class="segment-page">
+  <h2>Phân đoạn & Danh sách</h2>
+
+  <!-- STEPS -->
+  <div class="step-buttons">
+    <button
+      *ngFor="let s of steps; let i = index"
+      class="step-btn"
+      [class.active]="s.active"
+      (click)="setActiveStep(i)"
+    >
+      <i>{{ s.icon }}</i>
+      <span>{{ s.label }}</span>
+    </button>
+  </div>
+
+  <div class="main-content">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="segment-card">
+        <div class="header">
+          <h3>🎯 Điều kiện phân đoạn</h3>
+          <button class="add-btn" (click)="addCondition()">
+            + Thêm điều kiện
+          </button>
+        </div>
+
+        <!-- Dynamic form -->
+        <div class="form-grid">
+          <div class="form-group" *ngFor="let f of fields; let i = index">
+            <label>{{ f.label }}</label>
+
+            <input
+              *ngIf="f.type === 'text'"
+              [(ngModel)]="f.value"
+              [placeholder]="f.label"
+            />
+
+            <select *ngIf="f.type === 'select'" [(ngModel)]="f.value">
+              <option *ngFor="let opt of f.options">{{ opt }}</option>
+            </select>
+
+            <div *ngIf="f.type === 'tags'" class="tags">
+              <span *ngFor="let tag of f.values">{{ tag }}</span>
+            </div>
+
+            <button
+              class="remove-btn"
+              *ngIf="i >= 6"
+              (click)="removeCondition(i)"
+            >
+              ❌
+            </button>
+          </div>
+        </div>
+
+        <div class="note">
+          Kiểm tra trùng email/phone tự động. Có thể hợp nhất sau khi lưu.
+        </div>
+
+        <div class="actions">
+          <button class="refresh-btn" (click)="onRefresh()">Làm mới</button>
+          <button class="preview-btn" (click)="onPreview()">Xem trước</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="preview-card">
+        <div class="header">
+          <h3>📊 Xem trước & Thao tác</h3>
+          <span class="result-count">{{ previewData.length }} kết quả</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat" *ngFor="let f of fields">
+            <p>{{ f.label }}</p>
+            <h2>{{ f.value || "-" }}</h2>
+          </div>
+        </div>
+
+        <div class="sort-bulk">
+          <div>
+            <label>Sắp xếp theo</label>
+            <select>
+              <option *ngFor="let s of sortOptions">{{ s }}</option>
+            </select>
+          </div>
+          <div>
+            <label>Bulk actions</label>
+            <select>
+              <option *ngFor="let b of bulkActions">{{ b }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Preview list -->
+        <div class="preview-list">
+          <div class="contact" *ngFor="let c of previewData">
+            <div class="info">
+              <strong>{{ c.name }}</strong>
+              <p>{{ c.company }}</p>
+              <small>{{ c.contact }}</small>
+            </div>
+            <div class="meta">
+              <span *ngIf="c.noTouch">{{ c.noTouch }}</span>
+              <span *ngIf="c.tag" class="tag">{{ c.tag }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="save-actions">
+          <div class="merge">
+            <p>Gợi ý hợp nhất trùng khi lưu danh sách</p>
+            <button (click)="onSaveSegment()">💾 Lưu segment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <input [(ngModel)]="segmentName" placeholder="Tên segment / list..." />
+    <button class="smart-btn">⚙ Smart</button>
+    <div class="bottom-actions">
+      <button class="cancel" (click)="onCreateNew()">Tạo mới</button>
+      <button class="draft" (click)="onSaveSegment()">Lưu nháp</button>
+      <button class="create" (click)="onSaveSegment()">Tạo</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="email-crm-layout">
+  <header class="crm-header">
+    <h2>Email CRM</h2>
+    <div class="header-actions">
+      <input [(ngModel)]="search" placeholder="Tìm kiếm email..." />
+
+      <button class="btn-primary">+ Email mới</button>
+    </div>
+  </header>
+
+  <div class="email-content">
+    <!-- Cột trái -->
+    <div class="main">
+      <app-compose-email></app-compose-email>
+      <app-recent-emails></app-recent-emails>
+    </div>
+
+    <!-- Cột phải -->
+    <aside class="sidebar">
+      <app-recipients-sidebar></app-recipients-sidebar>
+    </aside>
+  </div>
+</div>

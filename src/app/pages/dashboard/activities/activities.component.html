@@ -1,0 +1,159 @@
+<div class="activities-page">
+  <!-- Thanh tìm kiếm -->
+  <div class="top-bar">
+    <input placeholder="Tìm kiếm liên hệ, công ty, hoạt động..." />
+    <div class="actions">
+      <button class="suggest">💡 Gợi ý bước tiếp theo</button>
+      <button class="create">+ Tạo hoạt động</button>
+    </div>
+  </div>
+
+  <!-- Lưới 3 cột -->
+  <div class="columns">
+    <!-- LEFT: FORM -->
+    <div class="col left">
+      <div class="card">
+        <h3>Hoạt động (Cuộc gọi / Cuộc họp / Nhiệm vụ / Email)</h3>
+
+        <!-- Tabs -->
+        <div class="type-tabs">
+          <button
+            *ngFor="let tab of tabs"
+            [class.active]="tab === activeTab"
+            (click)="selectTab(tab)"
+          >
+            {{ tab }}
+          </button>
+        </div>
+
+        <!-- Form -->
+        <h4>Tạo hoạt động</h4>
+        <div class="form-type">
+          <button
+            *ngFor="let t of formTabs"
+            [class.active]="t === selectedType"
+            (click)="selectType(t)"
+          >
+            {{ t }}
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label>Tiêu đề</label>
+          <input
+            [(ngModel)]="newActivity.title"
+            placeholder="Nhập tiêu đề..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Liên hệ</label>
+          <input [(ngModel)]="newActivity.contact" />
+        </div>
+
+        <div class="form-group">
+          <label>Công ty</label>
+          <input [(ngModel)]="newActivity.company" />
+        </div>
+
+        <div class="form-group">
+          <label>Ghi chú</label>
+          <textarea [(ngModel)]="newActivity.note"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="create-btn" (click)="createActivity()">Tạo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE: TIMELINE -->
+    <div class="col middle">
+      <div class="card timeline">
+        <h3>🕒 Timeline 360°</h3>
+
+        <div *ngFor="let g of filteredGroups" class="timeline-group">
+          <h4 class="timeline-section">{{ g.section }}</h4>
+          <div *ngFor="let a of g.activities" class="timeline-item">
+            <div class="icon">{{ getIcon(a.type) }}</div>
+            <div class="info">
+              <strong>{{ a.title }}</strong>
+              <p>
+                <span *ngIf="a.contact">Liên hệ: {{ a.contact }}</span>
+                <span *ngIf="a.company"> | Công ty: {{ a.company }}</span> •
+                {{ a.time }}
+              </p>
+              <small *ngIf="a.note">📝 {{ a.note }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: FILTER + AUTO -->
+    <!-- RIGHT: FILTER + AUTO -->
+    <div class="col right">
+      <div class="card filter">
+        <h3>🧭 Bộ lọc</h3>
+
+        <div class="filter-group">
+          <label>Bản ghi</label>
+          <select [(ngModel)]="filter.recordType">
+            <option>Liên hệ</option>
+            <option>Công ty</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Loại hoạt động</label>
+          <div class="tag-list">
+            <span
+              *ngFor="let t of ['Cuộc gọi', 'Cuộc họp', 'Nhiệm vụ', 'Email']"
+              [class.active]="filter.selectedTypes.has(t)"
+              (click)="toggleType(t)"
+            >
+              {{ t }}
+            </span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label>Trạng thái</label>
+          <select [(ngModel)]="filter.status">
+            <option>Mở</option>
+            <option>Hoàn thành</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Khoảng thời gian</label>
+          <select [(ngModel)]="filter.period">
+            <option>7 ngày gần đây</option>
+            <option>30 ngày gần đây</option>
+            <option>90 ngày gần đây</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Người phụ trách</label>
+          <select [(ngModel)]="filter.assignee">
+            <option>Bất kỳ</option>
+            <option>Huy</option>
+            <option>Minh Anh</option>
+            <option>Thu Hà</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card auto">
+        <h3>⚙️ Tự động hoá</h3>
+        <p>
+          <strong>Quy tắc:</strong> Nếu liên hệ không được chạm trong 14 ngày →
+          tạo nhiệm vụ follow-up.
+        </p>
+        <p><strong>Giao cho:</strong> Chủ sở hữu liên hệ</p>
+        <p><strong>Mẫu nhiệm vụ:</strong> Follow up hoạt động gần nhất</p>
+      </div>
+    </div>
+  </div>
+</div>

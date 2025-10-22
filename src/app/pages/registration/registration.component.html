@@ -1,0 +1,205 @@
+<div class="registration-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>💼 Bộ CRM</h2>
+    <p>Đăng ký tài khoản để quản lý khách hàng, cơ hội và tuân thủ.</p>
+
+    <ul class="features">
+      <li>⚙️ Thiết lập quyền theo vai trò ngay khi tạo</li>
+      <li>📩 Consent GDPR/PDPA cho Email & SMS</li>
+      <li>👥 Chủ sở hữu, Nhóm & Chia sẻ bản ghi</li>
+    </ul>
+
+    <div class="stats">
+      <div class="stat">
+        <h3>1,248</h3>
+        <p>Khách hàng</p>
+      </div>
+      <div class="stat">
+        <h3>312</h3>
+        <p>Cơ hội mở</p>
+      </div>
+      <div class="stat">
+        <h3>87%</h3>
+        <p>Email opt-in</p>
+      </div>
+      <div class="stat">
+        <h3>42</h3>
+        <p>Nhân sự</p>
+      </div>
+    </div>
+
+    <footer>
+      <small>Hỗ trợ ngôn ngữ: VI / EN</small><br />
+      <small>SSO, SCIM dành cho doanh nghiệp</small>
+    </footer>
+  </aside>
+
+  <!-- Form -->
+  <main class="form-container">
+    <div class="form-header">
+      <h2>→ Đăng ký</h2>
+      <div class="tabs">
+        <button class="active">Cá nhân</button>
+        <button>Tổ chức</button>
+      </div>
+    </div>
+
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <!-- Họ tên & Công ty -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input
+            type="text"
+            [(ngModel)]="formData.fullName"
+            name="fullName"
+            required
+            placeholder="Nguyen Van A"
+          />
+        </div>
+        <div class="form-group">
+          <label>Công ty</label>
+          <input
+            type="text"
+            [(ngModel)]="formData.company"
+            name="company"
+            required
+            placeholder="Công ty ABC"
+          />
+        </div>
+      </div>
+
+      <!-- Email & Nhập lại mật khẩu -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email công việc</label>
+          <input
+            type="email"
+            [(ngModel)]="formData.email"
+            name="email"
+            required
+            placeholder="name@company.com"
+          />
+        </div>
+        <div class="form-group">
+          <label>Nhập lại mật khẩu</label>
+          <input
+            type="password"
+            [(ngModel)]="formData.confirmPassword"
+            name="confirmPassword"
+            required
+            placeholder="********"
+          />
+        </div>
+      </div>
+
+      <!-- Mật khẩu & Nhóm -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mật khẩu</label>
+          <input
+            type="password"
+            [(ngModel)]="formData.password"
+            name="password"
+            required
+            placeholder="Tối thiểu 8 ký tự"
+          />
+        </div>
+        <div class="form-group">
+          <label>Nhóm / Đội</label>
+          <select [(ngModel)]="formData.group" name="group">
+            <option>Vietnam Sales</option>
+            <option>Marketing</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Vai trò -->
+      <div class="roles">
+        <label>Vai trò ban đầu</label>
+        <div class="role-buttons">
+          <button
+            type="button"
+            [class.active]="formData.role === 'Sales'"
+            (click)="formData.role = 'Sales'"
+          >
+            Sales
+          </button>
+          <button
+            type="button"
+            [class.active]="formData.role === 'Manager'"
+            (click)="formData.role = 'Manager'"
+          >
+            Quản lý
+          </button>
+          <button
+            type="button"
+            [class.active]="formData.role === 'Admin'"
+            (click)="formData.role = 'Admin'"
+          >
+            Admin
+          </button>
+        </div>
+      </div>
+
+      <!-- Tuân thủ -->
+      <div class="compliance-box">
+        <h4>Thiết lập Quyền & Tuân thủ</h4>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Chủ sở hữu mặc định</label>
+            <div class="owner">
+              <img src="assets/image/avatar.png" alt="avatar" />
+              <span>Nguyen Van A</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Chia sẻ bản ghi</label>
+            <select [(ngModel)]="formData.shareSetting" name="shareSetting">
+              <option>Riêng tư</option>
+              <option>Công khai</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label>
+            <input
+              type="checkbox"
+              [(ngModel)]="formData.emailOptIn"
+              name="emailOptIn"
+            />
+            Email opt-in (GDPR)
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              [(ngModel)]="formData.smsOptIn"
+              name="smsOptIn"
+            />
+            SMS opt-in (PDPA)
+          </label>
+        </div>
+      </div>
+
+      <!-- Nút submit -->
+      <button class="submit-btn" type="submit">Tạo tài khoản</button>
+
+      <div class="or-divider">hoặc</div>
+
+      <div class="social-login">
+        <button type="button">🔗 Magic link</button>
+        <button type="button">🐙 GitHub</button>
+        <button type="button">🏢 SSO doanh nghiệp</button>
+      </div>
+
+      <div class="footer-actions">
+        <button type="button" class="btn-text" routerLink="/login">
+          Đăng nhập
+        </button>
+        <button type="button" class="btn-text">Điều khoản</button>
+      </div>
+    </form>
+  </main>
+</div>

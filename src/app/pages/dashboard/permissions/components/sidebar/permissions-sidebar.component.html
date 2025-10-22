@@ -1,0 +1,71 @@
+<h4>⚙️ Cài đặt quyền</h4>
+<button class="btn-reset">Đặt lại</button>
+
+<section>
+  <h5>Chủ sở hữu mặc định</h5>
+  <select [(ngModel)]="defaultOwner">
+    <option>Luân phiên (Sales)</option>
+    <option>Ngẫu nhiên</option>
+  </select>
+
+  <h5>Khi chưa gán</h5>
+  <select [(ngModel)]="unassigned">
+    <option>Gán cho Trưởng nhóm</option>
+    <option>Bỏ qua</option>
+  </select>
+</section>
+
+<section>
+  <h5>Mẫu quyền</h5>
+  <ul>
+    <li><strong>Sales:</strong> xem đội, sửa của mình</li>
+    <li><strong>Quản lý:</strong> sửa tất cả trong đội</li>
+    <li><strong>Admin:</strong> toàn quyền hệ thống</li>
+  </ul>
+</section>
+
+<section>
+  <h5>Mặc định consent</h5>
+  <div class="consent-selects">
+    <label>Email opt-in</label>
+    <select [(ngModel)]="emailOpt">
+      <option>Opt-in</option>
+      <option>Opt-out</option>
+    </select>
+
+    <label>SMS opt-in</label>
+    <select [(ngModel)]="smsOpt">
+      <option>Opt-in</option>
+      <option>Opt-out</option>
+    </select>
+
+    <label>Thời hạn lưu trữ</label>
+    <select [(ngModel)]="retention">
+      <option>12 tháng</option>
+      <option>24 tháng</option>
+      <option>36 tháng</option>
+    </select>
+  </div>
+</section>
+
+<section>
+  <h5>🕓 Nhật ký kiểm tra</h5>
+  <ul class="log-list">
+    <li>
+      <div class="time">10:20</div>
+      <div>
+        Đã cập nhật quy tắc chia sẻ<br /><small
+          >Bởi: Anh Tran • Phạm vi: Khách hàng</small
+        >
+      </div>
+    </li>
+    <li>
+      <div class="time">Hôm qua</div>
+      <div>
+        Đã thay đổi chính sách consent<br /><small
+          >Bởi: Huy Pham • Opt-out</small
+        >
+      </div>
+    </li>
+  </ul>
+</section>

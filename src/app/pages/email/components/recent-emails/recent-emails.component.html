@@ -1,0 +1,57 @@
+<div class="recent-wrapper">
+  <div class="header">
+    <h4>📬 Email gần đây</h4>
+    <button class="btn-add" (click)="toggleForm()">
+      {{ showForm() ? "✖ Hủy" : "＋ Thêm email" }}
+    </button>
+  </div>
+
+  <!-- ✅ Form thêm email -->
+  <div class="add-form" *ngIf="showForm()">
+    <h5>🧾 Thêm email mới</h5>
+    <form (ngSubmit)="addNewEmail()">
+      <input
+        [(ngModel)]="newEmail().subject"
+        name="subject"
+        placeholder="Tiêu đề..."
+      />
+      <input
+        [(ngModel)]="newEmail().owner"
+        name="owner"
+        placeholder="Chủ sở hữu..."
+      />
+      <select [(ngModel)]="newEmail().status" name="status">
+        <option>Đã gửi</option>
+        <option>Đã lên lịch</option>
+      </select>
+
+      <div class="actions">
+        <button type="submit" class="btn-save">Lưu</button>
+        <button type="button" (click)="toggleForm()">Hủy</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ✅ Bảng email -->
+  <table>
+    <thead>
+      <tr>
+        <th>Tiêu đề</th>
+        <th>Người nhận</th>
+        <th>Chủ sở hữu</th>
+        <th>Trạng thái</th>
+        <th>Ngày gửi</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let e of emails()">
+        <td>{{ e.subject }}</td>
+        <td>{{ getRecipientsText(e.to) }}</td>
+        <td>{{ e.owner }}</td>
+        <td>{{ e.status }}</td>
+        <td>{{ e.createdAt | date : "short" }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

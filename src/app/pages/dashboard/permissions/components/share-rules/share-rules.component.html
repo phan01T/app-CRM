@@ -1,0 +1,88 @@
+<div class="share-rules-wrapper">
+  <h3>Quy tắc chia sẻ</h3>
+
+  <!-- Danh sách rule -->
+  <div class="rules-list">
+    <div class="rule-card" *ngFor="let r of rules">
+      <div class="rule-info">
+        <span class="rule-label">Rule</span>
+        <div class="rule-title">{{ r.title }}</div>
+        <div class="rule-desc">{{ r.description }}</div>
+      </div>
+      <div class="rule-actions">
+        <span class="status" [class.active]="r.status">
+          {{ r.status ? "Hoạt động" : "Tắt" }}
+        </span>
+        <button (click)="toggleStatus(r)">
+          {{ r.status ? "Tắt" : "Bật" }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hai panel -->
+  <div class="rule-panels">
+    <div class="left-panel">
+      <h4>Quyền theo vai trò</h4>
+      <div class="role-box">
+        <h5>Sales</h5>
+        <ul>
+          <li>- Xem/Sửa: khách hàng mình sở hữu</li>
+          <li>- Xem (chỉ đọc): khách hàng của đội</li>
+        </ul>
+        <h5>Quản lý</h5>
+        <ul>
+          <li>- Xem/Sửa: toàn bộ trong đội</li>
+        </ul>
+        <h5>Admin</h5>
+        <ul>
+          <li>- Toàn hệ thống</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <h4>Tạo quy tắc</h4>
+
+      <div class="form-grid">
+        <label>Đối tượng</label>
+        <select [(ngModel)]="selectedObject" name="object">
+          <option value="">-- Chọn đối tượng --</option>
+          <option>Khách hàng</option>
+          <option>Cơ hội</option>
+          <option>Chiến dịch</option>
+        </select>
+
+        <label>Ai</label>
+        <input
+          [(ngModel)]="selectedTeam"
+          name="team"
+          placeholder="VD: Sales - Miền Bắc"
+        />
+
+        <label>Quyền</label>
+        <select [(ngModel)]="selectedPermission" name="permission">
+          <option value="">-- Chọn quyền --</option>
+          <option>Chỉ đọc</option>
+          <option>Đọc/Ghi</option>
+          <option>Toàn quyền</option>
+        </select>
+
+        <label>Điều kiện</label>
+        <input
+          [(ngModel)]="selectedCondition"
+          name="condition"
+          placeholder="VD: Trạng thái = Hoạt động"
+        />
+      </div>
+
+      <div class="actions">
+        <button class="btn-outline">Xem trước</button>
+        <button class="btn-primary" (click)="saveRule()">Lưu quy tắc</button>
+      </div>
+
+      <!-- ✅ Thông báo lưu thành công -->
+      <div *ngIf="successMsg" class="alert success">{{ successMsg }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,189 @@
+<header class="header">
+  <!-- Left Section: Branding and Menu Toggle -->
+  <div class="header-left">
+    <button
+      class="hamburger-btn"
+      (click)="onToggleSidebar()"
+      aria-label="Toggle Sidebar"
+    >
+      ☰
+    </button>
+
+    <div class="brand">
+      <span class="brand-name">{{ brandName }}</span>
+    </div>
+  </div>
+
+  <!-- Middle Section: Navigation Tabs -->
+  <nav class="header-nav">
+    <ul class="nav-list">
+      <li
+        *ngFor="let item of navItems"
+        class="nav-item"
+        [class.has-dropdown]="item.hasDropdown"
+      >
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [class.active]="item.isActive"
+          (click)="setActiveItem(item)"
+          class="nav-link"
+        >
+          {{ item.label }}
+          <svg
+            *ngIf="item.hasDropdown"
+            viewBox="0 0 24 24"
+            class="dropdown-icon"
+            [class.rotated]="activeDropdown() === item.label"
+            (click)="toggleDropdown(item.label); $event.preventDefault()"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </a>
+
+        <!-- Dropdown Menu -->
+        <div
+          *ngIf="item.hasDropdown && activeDropdown() === item.label"
+          class="dropdown-menu"
+        >
+          <div class="dropdown-content">
+            <ng-container *ngFor="let sub of item.children">
+              <div class="dropdown-item-group">
+                <a [routerLink]="sub.route" class="dropdown-item">
+                  {{ sub.label }}
+                </a>
+
+                <!-- Submenu cấp 2 -->
+                <div *ngIf="sub.children" class="dropdown-submenu">
+                  <a
+                    href="#"
+                    class="dropdown-item has-submenu"
+                    (click)="toggleDropdown(sub.label); $event.preventDefault()"
+                  >
+                    {{ sub.label }} ▸
+                  </a>
+                  <div
+                    *ngIf="activeDropdown() === sub.label"
+                    class="dropdown-submenu-content"
+                  >
+                    <a
+                      *ngFor="let child of sub.children"
+                      [routerLink]="child.route"
+                      class="dropdown-item"
+                    >
+                      {{ child.label }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Right Section -->
+  <div class="header-right">
+    <!-- Search -->
+    <button class="utility-btn search-btn" aria-label="Search">
+      <svg viewBox="0 0 24 24" class="utility-icon">
+        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </button>
+
+    <!-- Brand (duplicate for right side) -->
+    <div class="brand-right">
+      <span class="brand-name">{{ brandName }}</span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="action-btn invite-btn">Mời</button>
+      <button class="action-btn buy-btn">Mua ngay</button>
+      <button class="action-btn help-btn">
+        Trợ giúp
+        <span *ngIf="helpNotifications() > 0" class="notification-badge">
+          {{ helpNotifications() }}
+        </span>
+      </button>
+    </div>
+
+    <!-- User Actions -->
+    <div class="user-actions">
+      <!-- 🔔 Nút thông báo -->
+      <button class="utility-btn notification-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" class="utility-icon">
+          <path
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+          />
+        </svg>
+      </button>
+
+      <!-- 👤 Nút profile -->
+      <button
+        class="utility-btn profile-btn"
+        aria-label="User Profile"
+        (click)="toggleProfileMenu()"
+      >
+        <svg viewBox="0 0 24 24" class="utility-icon">
+          <path
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          />
+        </svg>
+      </button>
+
+      <!-- Popup Profile -->
+      <div class="profile-popup" *ngIf="isProfileMenuOpen()">
+        <div class="profile-header">
+          <img src="assets/image/avatar.png" class="avatar" alt="User Avatar" />
+          <div class="info">
+            <h4>Phan Thắng</h4>
+            <p>Quản trị viên</p>
+          </div>
+          <button class="dropdown-btn">▾</button>
+        </div>
+
+        <div class="action-grid">
+          <button class="action-btn"><span class="icon">👤</span> Hồ sơ</button>
+          <button class="action-btn">
+            <span class="icon">⚙️</span> Cài đặt
+          </button>
+          <button class="action-btn">
+            <span class="icon">🛡️</span> Quyền & Tuân thủ
+          </button>
+          <button class="action-btn" (click)="logout()">
+            <span class="icon">↪️</span> Đăng xuất
+          </button>
+        </div>
+
+        <hr />
+
+        <div class="options">
+          <div class="langs">
+            <button [class.active]="lang() === 'vi'" (click)="toggleLang('vi')">
+              VI
+            </button>
+            <button [class.active]="lang() === 'en'" (click)="toggleLang('en')">
+              EN
+            </button>
+          </div>
+
+          <label class="theme-toggle">
+            <input
+              type="checkbox"
+              [(ngModel)]="darkMode"
+              (change)="toggleDarkMode()"
+            />
+            Chế độ tối
+          </label>
+        </div>
+
+        <div class="footer">
+          <button class="btn cancel" (click)="close()">Đóng</button>
+          <button class="btn save" (click)="save()">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

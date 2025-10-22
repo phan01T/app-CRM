@@ -1,0 +1,9 @@
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\controller\CustomerProfileController.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\controller\LeadController.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\CustomerProfileBackendApplication.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\entity\CustomerProfile.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\entity\Lead.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\repository\CustomerProfileRepository.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\repository\LeadRepository.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\service\CustomerProfileService.java
+D:\Projects\my-first-app\backend\customer-profile-backend\src\main\java\com\example\customer_profile_backend\service\LeadService.java

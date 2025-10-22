@@ -1,0 +1,89 @@
+<div class="compose-wrapper">
+  <h3>📧 Soạn email</h3>
+
+  <form (ngSubmit)="sendEmail()">
+    <!-- Hàng 1 -->
+    <div class="grid-3">
+      <div>
+        <label>Từ</label>
+        <input [(ngModel)]="email().from" name="from" />
+      </div>
+      <div>
+        <label>Gửi như</label>
+        <input [(ngModel)]="email().sendAs" name="sendAs" />
+      </div>
+      <div>
+        <label>Chủ sở hữu</label>
+        <input [(ngModel)]="email().owner" name="owner" />
+      </div>
+    </div>
+
+    <!-- Người nhận -->
+    <div>
+      <label>Đến</label>
+      <div class="chips">
+        <div *ngFor="let r of recipients(); let i = index" class="chip">
+          <img
+            [src]="r.avatar || 'https://i.pravatar.cc/40?u=' + r.email"
+            alt="avatar"
+          />
+          <span>{{ r.name }}</span>
+          <button type="button" (click)="removeRecipient(i)">✕</button>
+        </div>
+
+        <input
+          [ngModel]="newRecipient()"
+          (ngModelChange)="newRecipient.set($event)"
+          (keyup.enter)="addRecipient(newRecipient())"
+          list="contactList"
+          name="newRecipient"
+          placeholder="Nhập hoặc chọn email..."
+        />
+        <datalist id="contactList">
+          <option *ngFor="let c of knownRecipients()" [value]="c.email">
+            {{ c.name }}
+          </option>
+        </datalist>
+      </div>
+    </div>
+
+    <!-- Tiêu đề -->
+    <div>
+      <label>Tiêu đề</label>
+      <input
+        [(ngModel)]="email().subject"
+        name="subject"
+        placeholder="Nhập tiêu đề..."
+      />
+    </div>
+
+    <!-- Nội dung -->
+    <div>
+      <label>Nội dung</label>
+      <textarea
+        [(ngModel)]="email().body"
+        name="body"
+        placeholder="Nhập nội dung..."
+      ></textarea>
+    </div>
+
+    <!-- Tùy chọn -->
+    <div class="options">
+      <label>Theo dõi mở</label>
+      <select [(ngModel)]="email().trackingEnabled" name="tracking">
+        <option [ngValue]="true">Bật</option>
+        <option [ngValue]="false">Tắt</option>
+      </select>
+
+      <label>Lên lịch gửi</label>
+      <select [(ngModel)]="email().schedule" name="schedule">
+        <option>Ngay</option>
+        <option>Hẹn giờ</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn-primary">Gửi</button>
+    </div>
+  </form>
+</div>

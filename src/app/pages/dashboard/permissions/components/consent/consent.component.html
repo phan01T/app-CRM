@@ -1,0 +1,116 @@
+<div class="consent-wrapper">
+  <h3>Consent (GDPR/PDPA)</h3>
+
+  <!-- Bộ lọc -->
+  <div class="filter-row">
+    <select [(ngModel)]="filterEmail">
+      <option>Tất cả</option>
+      <option>Có</option>
+      <option>Không</option>
+    </select>
+
+    <select [(ngModel)]="filterSms">
+      <option>Tất cả</option>
+      <option>Có</option>
+      <option>Không</option>
+    </select>
+
+    <select [(ngModel)]="filterSource">
+      <option>Bất kỳ</option>
+      <option>Form</option>
+      <option>Email</option>
+      <option>POS</option>
+      <option>Chatbot</option>
+    </select>
+
+    <button class="btn-primary" (click)="toggleForm()">
+      {{ showForm ? "Đóng" : "Tạo consent" }}
+    </button>
+  </div>
+
+  <!-- Form tạo consent mới -->
+  <div class="create-form" *ngIf="showForm">
+    <h4>🧾 Tạo consent mới</h4>
+    <div class="form-grid">
+      <label>Khách hàng</label>
+      <input
+        [(ngModel)]="newConsent.name"
+        name="name"
+        placeholder="Tên khách hàng"
+      />
+
+      <label>Email</label>
+      <input
+        [(ngModel)]="newConsent.email"
+        name="email"
+        placeholder="email@domain.com"
+      />
+
+      <label>Nguồn</label>
+      <select [(ngModel)]="newConsent.source" name="source">
+        <option value="">-- Chọn --</option>
+        <option>Form</option>
+        <option>Email</option>
+        <option>POS</option>
+        <option>Chatbot</option>
+      </select>
+
+      <label>Email opt-in</label>
+      <select [(ngModel)]="newConsent.emailOptIn" name="emailOptIn">
+        <option value="">-- Chọn --</option>
+        <option>Có</option>
+        <option>Không</option>
+      </select>
+
+      <label>SMS opt-in</label>
+      <select [(ngModel)]="newConsent.smsOptIn" name="smsOptIn">
+        <option value="">-- Chọn --</option>
+        <option>Có</option>
+        <option>Không</option>
+      </select>
+
+      <label>Thời điểm</label>
+      <input
+        [(ngModel)]="newConsent.time"
+        name="time"
+        type="text"
+        placeholder="YYYY-MM-DD HH:mm"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button class="secondary" (click)="toggleForm()">Hủy</button>
+      <button class="primary" (click)="saveConsent()">Lưu consent</button>
+    </div>
+  </div>
+
+  <!-- Thông báo -->
+  <div *ngIf="successMsg" class="alert success">{{ successMsg }}</div>
+
+  <!-- Bảng danh sách consent -->
+  <table class="consent-table">
+    <thead>
+      <tr>
+        <th>Khách hàng</th>
+        <th>Nguồn</th>
+        <th>Email opt-in</th>
+        <th>SMS opt-in</th>
+        <th>Thời điểm</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of consents">
+        <td>
+          <div class="customer">
+            <div class="name">{{ c.name }}</div>
+            <div class="email">{{ c.email }}</div>
+          </div>
+        </td>
+        <td>{{ c.source }}</td>
+        <td>{{ c.emailOptIn }}</td>
+        <td>{{ c.smsOptIn }}</td>
+        <td>{{ c.time }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Leads API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 4px; border-left: 4px solid #007bff; }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Leads API</h1>
+        <p>Kiểm tra API backend cho Leads component</p>
+        
+        <div>
+            <button onclick="testGetLeads()">📋 Lấy danh sách Leads</button>
+            <button onclick="testCreateLead()">➕ Tạo Lead mới</button>
+            <button onclick="testUpdateLead()">✏️ Cập nhật Lead</button>
+            <button onclick="testDeleteLead()">🗑️ Xóa Lead</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8080/api/leads';
+        
+        function showResult(message, isError = false) {
+            const resultDiv = document.getElementById('result');
+            const className = isError ? 'result error' : 'result success';
+            resultDiv.innerHTML = `<div class="${className}"><pre>${message}</pre></div>`;
+        }
+        
+        async function testGetLeads() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                showResult(`✅ GET ${API_URL}\nStatus: ${response.status}\nData: ${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                showResult(`❌ Lỗi GET: ${error.message}`, true);
+            }
+        }
+        
+        async function testCreateLead() {
+            const newLead = {
+                name: "Test Lead " + Date.now(),
+                company: "Test Company",
+                email: "test@example.com",
+                phone: "0901234567",
+                status: "Mới",
+                value: 1000000,
+                owner: "Test Owner"
+            };
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newLead)
+                });
+                const data = await response.json();
+                showResult(`✅ POST ${API_URL}\nStatus: ${response.status}\nCreated: ${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                showResult(`❌ Lỗi POST: ${error.message}`, true);
+            }
+        }
+        
+        async function testUpdateLead() {
+            // Lấy lead đầu tiên để update
+            try {
+                const getResponse = await fetch(API_URL);
+                const leads = await getResponse.json();
+                
+                if (leads.length === 0) {
+                    showResult('❌ Không có lead nào để update', true);
+                    return;
+                }
+                
+                const leadToUpdate = leads[0];
+                leadToUpdate.name = "Updated " + leadToUpdate.name;
+                leadToUpdate.value = 2000000;
+                
+                const response = await fetch(`${API_URL}/${leadToUpdate.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(leadToUpdate)
+                });
+                const data = await response.json();
+                showResult(`✅ PUT ${API_URL}/${leadToUpdate.id}\nStatus: ${response.status}\nUpdated: ${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                showResult(`❌ Lỗi PUT: ${error.message}`, true);
+            }
+        }
+        
+        async function testDeleteLead() {
+            // Lấy lead đầu tiên để delete
+            try {
+                const getResponse = await fetch(API_URL);
+                const leads = await getResponse.json();
+                
+                if (leads.length === 0) {
+                    showResult('❌ Không có lead nào để xóa', true);
+                    return;
+                }
+                
+                const leadToDelete = leads[0];
+                const response = await fetch(`${API_URL}/${leadToDelete.id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showResult(`✅ DELETE ${API_URL}/${leadToDelete.id}\nStatus: ${response.status}\nDeleted lead: ${leadToDelete.name}`);
+                } else {
+                    showResult(`❌ Lỗi DELETE: ${response.status}`, true);
+                }
+            } catch (error) {
+                showResult(`❌ Lỗi DELETE: ${error.message}`, true);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<div class="permissions-layout">
+  <!-- Sidebar Tabs -->
+  <aside class="sidebar-tabs">
+    <h2>⚙️ Quyền & Tuân thủ</h2>
+    <nav>
+      <button [class.active]="isActive('owners')" (click)="setTab('owners')">
+        👥 Chủ sở hữu & Đội nhóm
+      </button>
+      <button [class.active]="isActive('rules')" (click)="setTab('rules')">
+        🔗 Quy tắc chia sẻ
+      </button>
+      <button [class.active]="isActive('consent')" (click)="setTab('consent')">
+        ✅ Consent
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <section class="main-content">
+    <div class="tab-content">
+      <app-owners *ngIf="isActive('owners')"></app-owners>
+      <app-share-rules *ngIf="isActive('rules')"></app-share-rules>
+      <app-consent *ngIf="isActive('consent')"></app-consent>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,86 @@
+<div class="owner-header">
+  <div class="left">
+    <h3>Chủ sở hữu & Đội nhóm</h3>
+  </div>
+
+  <div class="right">
+    <button class="create-btn" (click)="openForm()">
+      <span class="material-icons">group_add</span>
+      Tạo đội nhóm
+    </button>
+  </div>
+</div>
+
+<!-- Form tạo đội nhóm -->
+<div class="team-form" *ngIf="showForm">
+  <h4>🧩 Tạo đội nhóm mới</h4>
+  <div class="form-fields">
+    <label>
+      Tên đội nhóm
+      <input
+        type="text"
+        [(ngModel)]="newTeam.name"
+        placeholder="VD: Sales - Miền Nam"
+      />
+    </label>
+    <label>
+      Vai trò
+      <input
+        type="text"
+        [(ngModel)]="newTeam.role"
+        placeholder="VD: Quản lý, Kinh doanh"
+      />
+    </label>
+    <label>
+      Số thành viên
+      <input
+        type="text"
+        [(ngModel)]="newTeam.members"
+        placeholder="VD: 5 người"
+      />
+    </label>
+  </div>
+  <div class="form-actions">
+    <button class="secondary" (click)="cancelForm()">Hủy</button>
+    <button class="primary" (click)="saveTeam()">Lưu</button>
+  </div>
+</div>
+
+<!-- Thống kê -->
+<div class="stats">
+  <div class="card"><strong>6</strong><span>Số đội</span></div>
+  <div class="card"><strong>48</strong><span>Người dùng</span></div>
+  <div class="card"><strong>3</strong><span>Chưa gán chủ sở hữu</span></div>
+</div>
+
+<!-- Danh sách -->
+<table class="owners-table">
+  <thead>
+    <tr>
+      <th>Chủ sở hữu</th>
+      <th>Đội</th>
+      <th>Vai trò</th>
+      <th>Bản ghi</th>
+      <th>Kích hoạt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let o of owners">
+      <td class="owner">
+        <img [src]="o.avatar" class="avatar" />
+        <div>
+          <div class="name">{{ o.name }}</div>
+          <div class="email">{{ o.email }}</div>
+        </div>
+      </td>
+      <td>{{ o.team }}</td>
+      <td>{{ o.role }}</td>
+      <td>{{ o.records }}</td>
+      <td>
+        <span class="badge" [class.active]="o.active">
+          {{ o.active ? "Có" : "Không" }}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

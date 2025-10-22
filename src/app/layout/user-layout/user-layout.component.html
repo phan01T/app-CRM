@@ -1,0 +1,16 @@
+<div class="user-layout">
+  <aside class="sidebar">
+    <h3>User Workspace</h3>
+    <nav>
+      <a routerLink="/user/dashboard" routerLinkActive="active">Trang chủ</a>
+      <a routerLink="/user/leads" routerLinkActive="active">Khách hàng</a>
+      <a routerLink="/user/opportunities" routerLinkActive="active">Cơ hội</a>
+      <a routerLink="/user/calendar" routerLinkActive="active">Lịch</a>
+      <a routerLink="/user/support" routerLinkActive="active">Hỗ trợ</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

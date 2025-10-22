@@ -1,0 +1,8 @@
+{
+  "cSpell.words": ["primeng"],
+  "java.project.sourcePaths": [
+    "backend/customer-profile-backend/src/main/java/com/example/customer_profile_backend",
+    "backend/customer-profile-backend/src/main/java"
+  ],
+  "java.format.settings.url": ".vscode/java-formatter.xml"
+}

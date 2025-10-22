@@ -1,0 +1,31 @@
+<div class="stage-card" (click)="onOpen()">
+  <div class="top-accent"
+       [style.background]="'linear-gradient(90deg,' + color + ',transparent)'">
+  </div>
+
+  <div class="stage-head">
+    <div class="title">{{ title }}</div>
+    <div class="icon" [style.color]="color">
+      <svg *ngIf="iconPath" viewBox="0 0 24 24">
+        <path [attr.d]="iconPath" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="count-row">
+    
+    <button class="go" type="button" (click)="onOpen(); $event.stopPropagation()">
+      →
+    </button>
+  </div>
+
+  <div *ngIf="amount != null" class="amount">
+    {{ amount | number }} 
+  </div>
+
+  <div class="skeleton"></div>
+
+  <button class="quick-btn" *ngIf="showQuickButton" (click)="onQuickCreate($event)">
+    + Tạo nhanh
+  </button>
+</div>

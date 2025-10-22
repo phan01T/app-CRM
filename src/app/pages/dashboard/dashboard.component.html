@@ -1,0 +1,99 @@
+<section class="crm-header">
+  <!-- header + search giữ nguyên như bạn có -->
+  ...
+</section>
+
+<div class="stage-grid">
+  <app-stage-card
+    *ngFor="let s of stages"
+    [title]="s.title"
+    [icon]="s.icon"
+    [color]="s.color"
+    [count]="s.count ?? 0"
+    [amount]="s.amount ?? null"
+    [showQuickButton]="s.quick"
+    (open)="onOpenStage(s)"
+    (quickCreate)="onQuickCreateStage(s)"
+  >
+  </app-stage-card>
+</div>
+
+<!-- thông báo lỗi / loading -->
+<div *ngIf="loading">Đang tải dữ liệu...</div>
+<div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+<div class="dashboard" *ngIf="!loading && !errorMsg">
+  <!-- Balance analytics (Line) -->
+  <section class="card">
+    <div class="card-head">Balance analytics</div>
+    <ngx-charts-line-chart
+      [results]="balanceData"
+      [scheme]="colorScheme"
+      [legend]="true"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [autoScale]="true"
+      [roundDomains]="roundDomains"
+      [animations]="true"
+      [timeline]="false"
+    >
+    </ngx-charts-line-chart>
+  </section>
+
+  <!-- Market share (Donut + legend) -->
+  <section class="card">
+    <div class="card-head">Market share</div>
+    <div class="donut-wrap">
+      <ngx-charts-pie-chart
+        [results]="marketShare"
+        [scheme]="colorScheme"
+        [legend]="false"
+        [doughnut]="true"
+        [labels]="false"
+        [animations]="true"
+      >
+      </ngx-charts-pie-chart>
+
+      <ul class="legend">
+        <li *ngFor="let i of marketShare; let idx = index">
+          <span class="dot" [style.background]="colorScheme.domain[idx]"></span>
+          <span class="name">{{ i.name }}</span>
+          <span class="val">{{ i.value }}%</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Total sales (Bar) -->
+  <section class="card">
+    <div class="card-head">Total sales</div>
+    <ngx-charts-bar-vertical
+      [results]="salesData"
+      [scheme]="singleColor"
+      [legend]="false"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [roundDomains]="roundDomains"
+      [animations]="true"
+      [barPadding]="8"
+      [roundEdges]="true"
+    >
+    </ngx-charts-bar-vertical>
+  </section>
+
+  <!-- Top products -->
+  <section class="card">
+    <div class="card-head">Top products</div>
+    <ul class="products">
+      <li *ngFor="let p of topProducts">
+        <div class="left">
+          <span class="bullet"></span>
+          <span class="name">{{ p.name }}</span>
+        </div>
+        <div class="right positive">
+          + {{ p.delta | currency : "USD" : "symbol" : "1.0-0" }}
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,99 @@
+<section class="leads">
+  <h1>Quản lý khách hàng</h1>
+
+  <div class="toolbar">
+  <!-- Ô tìm kiếm -->
+  <input 
+    type="text" 
+    [(ngModel)]="searchText" 
+    placeholder="🔍 Tìm kiếm khách hàng..." 
+  />
+
+  <!-- Nhóm nút hành động -->
+  <div class="action-bar">
+    <button class="btn reload" (click)="loadLeads()">⟳ Tải lại</button>
+
+    <select class="date">
+      <option>Ngày cập nhật</option>
+      <option>Ngày tạo</option>
+    </select>
+
+    <select>
+      <option>Tất cả thời gian</option>
+      <option>Hôm nay</option>
+      <option>Tuần này</option>
+      <option>Tháng này</option>
+    </select>
+
+    <input type="date" />
+
+    <button class="btn add" (click)="addLead()">+ Thêm mới</button>
+
+    <div class="dropdown">
+      <button class="btn more">⋮ Tiện ích ▾</button>
+      <div class="dropdown-menu">
+        <button>Xuất Excel</button>
+        <button>Import CSV</button>
+        <button>Báo cáo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+  <div class="table-container">
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th>Tên</th>
+          <th>Công ty</th>
+          <th>Email</th>
+          <th>Điện thoại</th>
+          <th>Giá trị</th>
+          <th>Người phụ trách</th>
+          <th>Trạng thái</th>
+          <th style="width: 120px">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lead of filteredLeads">
+          <td>{{ lead.name }}</td>
+          <td>{{ lead.company }}</td>
+          <td>{{ lead.email }}</td>
+          <td>{{ lead.phone }}</td>
+          <td>{{ lead.value | currency:'VND' }}</td>
+          <td>{{ lead.owner }}</td>
+          <td>{{ lead.status }}</td>
+          <td class="actions">
+            <button class="btn edit" (click)="editLead(lead)">✏️</button>
+            <button class="btn delete" (click)="deleteLead(lead)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal form -->
+  <div class="modal" *ngIf="showForm">
+    <div class="modal-content">
+      <h2>{{ editingLead?.id ? 'Sửa khách hàng' : 'Thêm khách hàng mới' }}</h2>
+      <form (ngSubmit)="saveLead()">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="editingLead!.name" name="name" placeholder="Tên khách hàng" required />
+          <input type="text" [(ngModel)]="editingLead!.company" name="company" placeholder="Công ty" />
+          <input type="email" [(ngModel)]="editingLead!.email" name="email" placeholder="Email" required />
+          <input type="text" [(ngModel)]="editingLead!.phone" name="phone" placeholder="Điện thoại" />
+          <input type="number" [(ngModel)]="editingLead!.value" name="value" placeholder="Giá trị" />
+          <input type="text" [(ngModel)]="editingLead!.owner" name="owner" placeholder="Người phụ trách" />
+          <input type="text" [(ngModel)]="editingLead!.status" name="status" placeholder="Trạng thái" />
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn save">💾 Lưu</button>
+          <button type="button" class="btn cancel" (click)="cancelForm()">❌ Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

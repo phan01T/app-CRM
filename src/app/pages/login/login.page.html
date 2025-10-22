@@ -1,0 +1,121 @@
+<div class="login-container">
+  <!-- LEFT PANEL -->
+  <aside class="left-panel">
+    <div class="logo">
+      <i class="icon">🔐</i>
+      <h2>Bộ CRM</h2>
+    </div>
+    <p class="desc">
+      Đăng nhập để tiếp tục quản trị khách hàng, cơ hội và tuân thủ.
+    </p>
+
+    <ul class="features">
+      <li>🔒 SSO & chính sách mật khẩu nâng cao</li>
+      <li>👥 Quyền theo vai trò, chủ sở hữu & chia sẻ</li>
+      <li>✅ Consent GDPR/PDPA được tôn trọng</li>
+    </ul>
+
+    <div class="stats">
+      <div class="stat">
+        <h3>5</h3>
+        <p>Đăng nhập hôm nay</p>
+      </div>
+      <div class="stat">
+        <h3>98.9%</h3>
+        <p>Uptime</p>
+      </div>
+      <div class="stat">
+        <h3>2FA</h3>
+        <p>Khuyến nghị bật</p>
+      </div>
+      <div class="stat">
+        <h3>VI / EN</h3>
+        <p>Ngôn ngữ</p>
+      </div>
+    </div>
+
+    <p class="support">
+      Hỗ trợ ngôn ngữ: VI / EN<br />SCIM dành cho doanh nghiệp
+    </p>
+  </aside>
+
+  <!-- RIGHT FORM -->
+  <section class="right-panel">
+    <div class="lang-switch">
+      <button [class.active]="lang === 'vi'" (click)="setLang('vi')">VI</button>
+      <button [class.active]="lang === 'en'" (click)="setLang('en')">EN</button>
+    </div>
+
+    <div class="login-box">
+      <h3>→ Đăng nhập</h3>
+
+      <form (ngSubmit)="onLogin()">
+        <label>Email công việc</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="name@company.com"
+          required
+        />
+
+        <label>Mật khẩu</label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+
+        <div class="options">
+          <label><input type="checkbox" /> Ghi nhớ tôi</label>
+          <a href="#">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" class="btn-primary">→ Đăng nhập</button>
+
+        <div class="access">
+          <h4>Tuân thủ & quyền truy cập</h4>
+          <div class="access-grid">
+            <div>
+              <label>Phạm vi truy cập</label>
+              <select>
+                <option>Chi đọc</option>
+                <option>Toàn quyền</option>
+              </select>
+            </div>
+            <div>
+              <label>Nhóm</label>
+              <select>
+                <option>Vietnam Sales</option>
+                <option>Marketing</option>
+              </select>
+            </div>
+          </div>
+          <label class="terms">
+            <input type="checkbox" /> Tôi đồng ý với điều khoản và chính sách
+          </label>
+        </div>
+
+        <div class="or">hoặc</div>
+
+        <div class="external-login">
+          <button class="btn-alt">SSO doanh nghiệp</button>
+          <button class="btn-alt">GitHub</button>
+          <button class="btn-alt">Magic link</button>
+        </div>
+      </form>
+
+      <form (ngSubmit)="onLogin()">
+        <div class="footer-actions">
+          <button type="button" class="btn-text" routerLink="/registration">
+            Đăng ký
+          </button>
+
+          <button type="button" class="btn-text">Điều khoản</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

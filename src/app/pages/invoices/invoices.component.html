@@ -1,0 +1,208 @@
+<div class="invoice-wrapper">
+  <h2>Hóa đơn</h2>
+
+  <div class="search-bar">
+    <input placeholder="Tìm theo khách hàng, số hóa đơn..." />
+    <select [(ngModel)]="filterStatus">
+      <option>Tất cả</option>
+      <option>Đang chờ</option>
+      <option>Đã thanh toán</option>
+      <option>Quá hạn</option>
+    </select>
+    <button class="add-btn" (click)="openCreateModal()">+ Tạo hóa đơn</button>
+  </div>
+
+  <!-- DANH SÁCH HÓA ĐƠN -->
+  <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>Khách hàng</th>
+        <th>Số hóa đơn</th>
+        <th>Số tiền</th>
+        <th>Ngày đến hạn</th>
+        <th>Trạng thái</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let inv of filteredInvoices()">
+        <td>{{ inv.customer }}</td>
+        <td>{{ inv.code }}</td>
+        <td>{{ inv.amount }}</td>
+        <td>{{ inv.dueDate }}</td>
+        <td>
+          <span class="status" [ngClass]="inv.status">{{ inv.status }}</span>
+        </td>
+        <td>
+          <button
+            class="link-btn"
+            *ngIf="inv.status === 'Đã thanh toán'"
+            (click)="viewInvoice(inv.code)"
+          >
+            Xem
+          </button>
+          <button
+            class="link-btn"
+            *ngIf="inv.status === 'Quá hạn'"
+            (click)="remindInvoice(inv.code)"
+          >
+            Gửi nhắc nhở
+          </button>
+          <button
+            class="link-btn"
+            *ngIf="inv.status === 'Đang chờ'"
+            (click)="sendPendingInvoice(inv.code)"
+          >
+            Gửi
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TẠO HÓA ĐƠN NHANH -->
+  <div class="create-section">
+    <div class="form">
+      <h3>Tạo hóa đơn nhanh</h3>
+      <label>Khách hàng</label>
+      <input placeholder="Chọn khách hàng" [(ngModel)]="newInvoice.customer" />
+
+      <label>Ngày đến hạn</label>
+      <input type="date" [(ngModel)]="newInvoice.dueDate" />
+
+      <label>Dòng sản phẩm</label>
+      <div
+        class="item-row"
+        *ngFor="let item of newInvoice.items; let i = index"
+      >
+        <input placeholder="Mô tả" [(ngModel)]="item.desc" />
+        <input type="number" placeholder="SL" [(ngModel)]="item.qty" />
+        <input type="number" placeholder="Giá" [(ngModel)]="item.price" />
+        <button (click)="removeItem(i)">🗑</button>
+      </div>
+
+      <button class="add-row-btn" (click)="addItem()">＋ Thêm dòng</button>
+
+      <div class="total">
+        Tổng tiền: {{ calcTotal() | number : "1.0-0" }} {{ settings.currency }}
+      </div>
+
+      <button (click)="createInvoice()">Gửi hóa đơn</button>
+    </div>
+
+    <div class="settings">
+      <h3>Thiết lập hóa đơn</h3>
+      <label>Mẫu hóa đơn</label>
+      <select [(ngModel)]="settings.template">
+        <option>Tối giản</option>
+        <option>Chi tiết</option>
+      </select>
+
+      <label>Tiền tệ</label>
+      <select [(ngModel)]="settings.currency">
+        <option>USD</option>
+        <option>VND</option>
+      </select>
+
+      <label>Tự động nhắc nhở</label>
+      <input type="checkbox" [(ngModel)]="settings.autoReminder" />
+
+      <label>Ngôn ngữ</label>
+      <select [(ngModel)]="settings.language">
+        <option>Tiếng Việt</option>
+        <option>English</option>
+      </select>
+
+      <label>Gửi qua Email</label>
+      <input [(ngModel)]="settings.smtp" />
+
+      <label>Định dạng PDF</label>
+      <select [(ngModel)]="settings.pdf">
+        <option>Chuẩn A4</option>
+        <option>Compact</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- NGƯỜI DÙNG -->
+  <div class="user-section">
+    <h3>Quản lý người dùng (Admin)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Người dùng</th>
+          <th>Email</th>
+          <th>Vai trò</th>
+          <th>Trạng thái</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users()">
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.role }}</td>
+          <td>
+            <span class="status" [ngClass]="u.status">{{ u.status }}</span>
+          </td>
+          <td>
+            <button class="link-btn">Sửa</button>
+            <button class="link-btn danger">Vô hiệu</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="add-btn" (click)="openUserModal()">+ Thêm người dùng</button>
+  </div>
+</div>
+
+<!-- MODAL: TẠO HÓA ĐƠN -->
+<div class="modal" *ngIf="showCreateInvoice">
+  <div class="modal-content">
+    <h3>🧾 Tạo hóa đơn mới</h3>
+    <label>Khách hàng</label>
+    <input [(ngModel)]="newInvoice.customer" placeholder="Tên khách hàng" />
+
+    <label>Ngày đến hạn</label>
+    <input type="date" [(ngModel)]="newInvoice.dueDate" />
+
+    <label>Dòng sản phẩm</label>
+    <div class="item-row" *ngFor="let item of newInvoice.items; let i = index">
+      <input placeholder="Mô tả" [(ngModel)]="item.desc" />
+      <input type="number" placeholder="SL" [(ngModel)]="item.qty" />
+      <input type="number" placeholder="Giá" [(ngModel)]="item.price" />
+      <button (click)="removeItem(i)">🗑</button>
+    </div>
+
+    <button class="add-row-btn" (click)="addItem()">＋ Thêm dòng</button>
+
+    <div class="total">
+      Tổng tiền: {{ calcTotal() | number : "1.0-0" }} {{ settings.currency }}
+    </div>
+
+    <div class="actions">
+      <button (click)="createInvoice()">Tạo hóa đơn</button>
+      <button class="cancel" (click)="closeModals()">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: THÊM NGƯỜI DÙNG -->
+<div class="modal" *ngIf="showCreateUser">
+  <div class="modal-content">
+    <h3>👤 Thêm người dùng</h3>
+    <label>Họ tên</label>
+    <input [(ngModel)]="newUser.name" />
+    <label>Email</label>
+    <input [(ngModel)]="newUser.email" />
+    <label>Vai trò</label>
+    <select [(ngModel)]="newUser.role">
+      <option>Quản trị</option>
+      <option>Kế toán</option>
+    </select>
+    <div class="actions">
+      <button (click)="addUser()">Thêm</button>
+      <button class="cancel" (click)="closeModals()">Đóng</button>
+    </div>
+  </div>
+</div>

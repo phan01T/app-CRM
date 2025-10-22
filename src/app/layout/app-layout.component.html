@@ -1,0 +1,16 @@
+<!-- app-layout.component.html -->
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+
+<div class="shell" [class.collapse]="isCollapsed">
+  <aside class="sidebar">
+    <app-expandable-menu
+      [items]="menuItems"
+      [icons]="icons"
+      [isCollapsed]="isCollapsed"
+    ></app-expandable-menu>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

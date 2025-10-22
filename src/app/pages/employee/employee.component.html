@@ -1,0 +1,66 @@
+<div class="employee-page">
+  <!-- Header -->
+  <header class="header">
+    <h1>Tìm Nhân viên</h1>
+    <div class="actions">
+      <button class="btn add" [routerLink]="['/invitation']">+ Mời</button>
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        placeholder="🔍 Lọc và tìm kiếm"
+      />
+    </div>
+  </header>
+
+  <!-- Info Box -->
+  <div class="info-box">
+    <p>Số người dùng tối đa: <span class="highlight">không giới hạn</span></p>
+    <p>Đang dùng: <span class="highlight">1</span></p>
+  </div>
+
+  <!-- Status -->
+  <div class="status-bar">
+    <span>0 Đang chờ xác nhận đăng nhập</span>
+    <span>0 Được mời</span>
+  </div>
+
+  <!-- Employee Table -->
+  <div class="table-wrapper">
+    <table class="employee-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nhân viên</th>
+          <th>Phòng ban</th>
+          <th>Email</th>
+          <th>Di động</th>
+          <th>Ngày hoạt động gần nhất</th>
+          <th>Ứng dụng di động</th>
+          <th>Ứng dụng máy tính</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of filteredEmployees">
+          <td><input type="checkbox" /></td>
+          <td>
+            <div class="employee-info">
+              <img [src]="e.avatar" class="avatar" />
+              <div>
+                <div class="name">{{ e.name }}</div>
+                <div class="role">{{ e.role }}</div>
+              </div>
+            </div>
+          </td>
+          <td>{{ e.department }}</td>
+          <td>
+            <a [href]="'mailto:' + e.email">{{ e.email }}</a>
+          </td>
+          <td>{{ e.phone }}</td>
+          <td>{{ e.lastActive }}</td>
+          <td>{{ e.mobileApp }}</td>
+          <td>{{ e.desktopApp }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

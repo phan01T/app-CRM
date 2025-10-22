@@ -1,0 +1,195 @@
+<div class="sync-wrapper">
+  <!-- HEADER -->
+  <div class="top-bar">
+    <input
+      type="text"
+      placeholder="Tìm kiếm khách hàng, sản phẩm, hóa đơn..."
+    />
+    <div class="actions">
+      <button
+        *ngFor="let act of actions"
+        [ngClass]="act.color"
+        (click)="act.action()"
+      >
+        <span class="material-icons">{{ act.icon }}</span>
+        {{ act.label }}
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- LEFT PANEL -->
+    <div class="left">
+      <h2>📦 Import / Export & Sync</h2>
+      <div class="tabs">
+        <button
+          *ngFor="let t of tabs; let i = index"
+          [class.active]="step === i + 1"
+          (click)="setStep(i + 1)"
+        >
+          {{ t }}
+        </button>
+      </div>
+
+      <!-- IMPORT -->
+      <div *ngIf="step === 1" class="import-box">
+        <h3>Import CSV/XLSX</h3>
+        <div class="upload">
+          <div class="upload-left">
+            <span class="material-icons">upload_file</span>
+            <p>Kéo & thả file CSV/XLSX hoặc click để chọn</p>
+            <input type="file" (change)="onFileSelect($event)" />
+            <p *ngIf="fileName" class="file-name">📁 {{ fileName }}</p>
+          </div>
+          <div class="guide">
+            <h4>📘 Hướng dẫn</h4>
+            <ul>
+              <li>Phải có cột: first_name, last_name, email, phone</li>
+              <li>Ngày dạng: YYYY-MM-DD</li>
+              <li>Tối đa: 10,000 dòng</li>
+            </ul>
+          </div>
+        </div>
+        <button class="primary full" (click)="setStep(2)">Tiếp tục</button>
+      </div>
+
+      <!-- MAPPING -->
+      <div *ngIf="step === 2" class="mapping">
+        <h3>Mapping fields</h3>
+        <div class="map-grid">
+          <div
+            class="map-row"
+            *ngFor="let col of mappingColumns; let idx = index"
+          >
+            <div>
+              <label>CSV Column</label>
+              <select>
+                <option [selected]="true">{{ col.csv }}</option>
+              </select>
+            </div>
+            <div>
+              <label>Map to field</label>
+              <select>
+                <option>{{ col.field }}</option>
+              </select>
+            </div>
+            <div>
+              <label>Sample</label>
+              <input [value]="data[idx].firstName || ''" />
+            </div>
+          </div>
+        </div>
+        <button class="primary full" (click)="setStep(3)">Tiếp tục</button>
+      </div>
+
+      <!-- PREVIEW -->
+      <div *ngIf="step === 3" class="preview">
+        <h3>Preview & Errors</h3>
+        <div class="error-bar">{{ errorMessage }}</div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Email</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of data">
+              <td>{{ r.firstName }}</td>
+              <td>{{ r.lastName }}</td>
+              <td [class.error]="!r.email.includes('@')">{{ r.email }}</td>
+              <td>{{ r.phone }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer-controls">
+          <select>
+            <option>Skip</option>
+            <option>Update tất cả field</option>
+          </select>
+          <select>
+            <option>Giữ dữ liệu CRM</option>
+          </select>
+          <button class="primary" (click)="onImport()">Nhập</button>
+        </div>
+      </div>
+
+      <!-- EXPORT -->
+      <div *ngIf="step === 4" class="export">
+        <h3>Export</h3>
+        <div class="export-grid">
+          <div>
+            <label>Đối tượng</label>
+            <select [(ngModel)]="exportOptions.target">
+              <option>Customers</option>
+              <option>Invoices</option>
+              <option>Products</option>
+            </select>
+          </div>
+          <div>
+            <label>Trường dữ liệu</label>
+            <select [(ngModel)]="exportOptions.fields">
+              <option>Tất cả</option>
+              <option>Tối thiểu</option>
+              <option>Tùy chọn</option>
+            </select>
+          </div>
+          <div>
+            <label>Định dạng</label>
+            <select [(ngModel)]="exportOptions.format">
+              <option>CSV</option>
+              <option>XLSX</option>
+            </select>
+          </div>
+        </div>
+        <button class="secondary" (click)="onExport()">Xuất</button>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right">
+      <div class="sync-box">
+        <h3>⚙️ Sync Integrations</h3>
+        <div class="connections">
+          <div
+            *ngFor="let i of integrations"
+            class="connect-card"
+            [class.connected]="i.connected"
+          >
+            <div class="info">
+              <span class="material-icons">{{ i.icon }}</span>
+              <div>
+                <strong>{{ i.name }}</strong>
+                <span>{{ i.mode }}</span>
+                <small *ngIf="i.connected && i.lastSync"
+                  >🕒 {{ i.lastSync }}</small
+                >
+              </div>
+            </div>
+            <button
+              [class.connected-btn]="i.connected"
+              (click)="toggleIntegration(i)"
+            >
+              {{ i.connected ? "Đã kết nối" : "Kết nối" }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="logs">
+        <h3>📜 Nhật ký đồng bộ</h3>
+        <div *ngFor="let l of logs" class="log">
+          <strong>{{ l.time }}</strong>
+          <div>
+            <p>{{ l.message }}</p>
+            <small>{{ l.status }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

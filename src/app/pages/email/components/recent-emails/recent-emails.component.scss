@@ -1,0 +1,85 @@
+.recent-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-top: 16px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .btn-add {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+      &:hover {
+        background: #125dc3;
+      }
+    }
+  }
+
+  .add-form {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+
+    form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      input,
+      select {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      .actions {
+        display: flex;
+        gap: 6px;
+
+        .btn-save {
+          background: #1a73e8;
+          color: #fff;
+          border: none;
+          padding: 6px 10px;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+
+        button {
+          background: #f1f3f4;
+          border: none;
+          border-radius: 6px;
+          padding: 6px 10px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    tr:hover {
+      background: #f6faff;
+    }
+  }
+}

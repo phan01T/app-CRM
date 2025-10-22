@@ -1,0 +1,105 @@
+.employee-page {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  background: #fff;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      input {
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .btn {
+    background: #f3f3f3;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &.add {
+      background: #28a745;
+      color: #fff;
+    }
+  }
+
+  .info-box {
+    margin: 16px 0;
+    background: #e6f4ea;
+    padding: 12px;
+    border-radius: 6px;
+
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+  }
+
+  .status-bar {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    gap: 20px;
+  }
+
+  .employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    .employee-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .avatar {
+        border-radius: 50%;
+      }
+
+      .name {
+        font-weight: bold;
+      }
+
+      .role {
+        font-size: 12px;
+        color: green;
+      }
+    }
+  }
+
+  .table-footer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .pagination {
+      margin-left: auto;
+    }
+  }
+}

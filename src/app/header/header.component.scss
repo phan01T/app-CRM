@@ -1,0 +1,490 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(180deg, #4875b9 0%, #748fb3 100%);
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  // Left Section
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 200px;
+
+    .hamburger-btn {
+      font-size: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      margin-right: 12px;
+    }
+
+    .hamburger-menu {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f3f4f6;
+      }
+
+      .hamburger-icon {
+        width: 20px;
+        height: 20px;
+        stroke: #374151;
+        stroke-width: 2;
+        fill: none;
+      }
+    }
+
+    .brand {
+      .brand-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+    }
+  }
+
+  // Middle Section - Navigation
+  .header-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 8px;
+
+      .nav-item {
+        position: relative;
+
+        .nav-link {
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 16px;
+          border-radius: 7px;
+          text-decoration: none;
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 400;
+          transition: all 0.2s ease;
+          position: relative;
+
+          &:hover {
+            background-color: #f9fafb;
+            color: #111827;
+          }
+
+          &.active {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-weight: 600;
+          }
+
+          .dropdown-icon {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+
+            &.rotated {
+              transform: rotate(180deg);
+            }
+          }
+        }
+
+        // Dropdown Menu Styles
+        .dropdown-menu {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          z-index: 1000;
+          margin-top: 4px;
+          min-width: 200px;
+
+          .dropdown-content {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+              0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 8px 0;
+            overflow: hidden;
+
+            .dropdown-item {
+              display: block;
+              padding: 10px 16px;
+              color: #374151;
+              text-decoration: none;
+              font-size: 14px;
+              transition: background-color 0.2s ease;
+
+              &:hover {
+                background-color: #f9fafb;
+                color: #111827;
+              }
+
+              &:first-child {
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+              }
+
+              &:last-child {
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+              }
+            }
+
+            .dropdown-divider {
+              height: 1px;
+              background-color: #e5e7eb;
+              margin: 4px 0;
+            }
+          }
+        }
+
+        // Show dropdown on hover for better UX
+        &:hover .dropdown-menu {
+          display: block;
+        }
+      }
+    }
+  }
+
+  // Right Section
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 200px;
+    justify-content: flex-end;
+
+    .utility-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f3f4f6;
+      }
+
+      .utility-icon {
+        width: 20px;
+        height: 20px;
+        stroke: #6b7280;
+        stroke-width: 2;
+        fill: none;
+      }
+    }
+
+    .brand-right {
+      .brand-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #6b7280;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .action-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        position: relative;
+
+        &.invite-btn {
+          background: #f9fafb;
+          color: #374151;
+          border: 1px solid #d1d5db;
+
+          &:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+          }
+        }
+
+        &.buy-btn {
+          background: #10b981;
+          color: white;
+          font-weight: 600;
+
+          &:hover {
+            background: #059669;
+          }
+        }
+
+        &.help-btn {
+          background: #f9fafb;
+          color: #374151;
+          border: 1px solid #d1d5db;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          &:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+          }
+
+          .notification-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    .user-actions {
+      position: relative;
+
+      .profile-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.3rem;
+        border-radius: 50%;
+        transition: background 0.2s;
+
+        &:hover {
+          background: #f3f3f3;
+        }
+      }
+    }
+  }
+
+  // Responsive design
+  @media (max-width: 1024px) {
+    .header {
+      .header-nav {
+        display: none;
+      }
+
+      .header-right {
+        .brand-right {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: 0 16px;
+
+      .header-right {
+        .action-buttons {
+          .action-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  //style popup
+
+  .profile-popup {
+    position: absolute;
+    top: 2.6rem;
+    right: 0;
+    width: 280px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    z-index: 200;
+    padding: 0.8rem;
+    animation: fadeIn 0.2s ease-in-out;
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+
+      .avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .info {
+        flex: 1;
+        margin-left: 0.6rem;
+
+        h4 {
+          margin: 0;
+          font-size: 0.95rem;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.8rem;
+          color: #777;
+        }
+      }
+
+      .dropdown-btn {
+        background: transparent;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+
+      .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0.35rem 0.5rem;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+
+        &:hover {
+          background: #e9ecef;
+        }
+
+        .icon {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+
+      .langs button {
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        margin-right: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.active {
+          background: #007bff;
+          color: #fff;
+          border-color: #007bff;
+        }
+
+        &:hover {
+          background: #f0f6ff;
+        }
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.4rem;
+
+      .btn {
+        flex: 1;
+        border: none;
+        border-radius: 6px;
+        padding: 0.4rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &.cancel {
+          background: #f8f9fa;
+
+          &:hover {
+            background: #e9ecef;
+          }
+        }
+
+        &.save {
+          background: #007bff;
+          color: #fff;
+
+          &:hover {
+            background: #0068d1;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

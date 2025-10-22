@@ -1,0 +1,272 @@
+<div class="page-header">
+  <h2>Customer Records</h2>
+
+  <div class="actions">
+    <button
+      class="btn"
+      [class.primary]="activeTab === 'contact'"
+      (click)="activeTab = 'contact'"
+    >
+      👤 Liên hệ
+    </button>
+    <button
+      class="btn"
+      [class.primary]="activeTab === 'company'"
+      (click)="activeTab = 'company'"
+    >
+      🏢 Công ty
+    </button>
+    <button class="btn primary" (click)="handleAction('create')">
+      ➕ Tạo mới
+    </button>
+  </div>
+</div>
+
+<div class="customer-profile">
+  <div class="main-content">
+    <!-- ================= LEFT SIDE ================= -->
+    <div class="left-section">
+      <!-- Filter -->
+      <div class="tabs">
+        <input
+          [(ngModel)]="searchText"
+          placeholder="Tìm kiếm theo tên, email, điện thoại..."
+          class="filter"
+        />
+        <button class="btn" (click)="handleAction('filter')">Lọc</button>
+      </div>
+
+      <!-- CONTACTS TABLE -->
+      <div class="card-table" *ngIf="activeTab === 'contact'">
+        <h3>Danh sách liên hệ</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th *ngFor="let f of fieldsContact">{{ f.label }}</th>
+              <th>Thao tác</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of filteredContacts; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td *ngFor="let f of fieldsContact">{{ c[f.key] }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn small-1" (click)="handleAction('edit', c)">
+                    Sửa
+                  </button>
+                  <button class="btn small" (click)="handleAction('delete', c)">
+                    Xóa
+                  </button>
+                  <button
+                    class="btn secondary small"
+                    (click)="handleAction('lock', c)"
+                  >
+                    {{ c.locked ? "Mở khóa" : "Khóa" }}
+                  </button>
+                </div>
+              </td>
+              <td>
+                <span
+                  [style.color]="c.locked ? '#d93025' : '#188038'"
+                  style="font-weight: 500"
+                >
+                  {{ c.locked ? "Đã khóa" : "Hoạt động" }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- COMPANIES TABLE -->
+      <div class="card-table" *ngIf="activeTab === 'company'">
+        <h3>Danh sách công ty</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th *ngFor="let f of fieldsCompany">{{ f.label }}</th>
+              <th>Thao tác</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of filteredCompanies; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td *ngFor="let f of fieldsCompany">{{ c[f.key] }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn small-1" (click)="handleAction('edit', c)">
+                    Sửa
+                  </button>
+                  <button class="btn small" (click)="handleAction('delete', c)">
+                    Xóa
+                  </button>
+                  <button
+                    class="btn secondary small"
+                    (click)="handleAction('lock', c)"
+                  >
+                    {{ c.locked ? "Mở khóa" : "Khóa" }}
+                  </button>
+                </div>
+              </td>
+              <td>
+                <span
+                  [style.color]="c.locked ? '#d93025' : '#188038'"
+                  style="font-weight: 500"
+                >
+                  {{ c.locked ? "Đã khóa" : "Hoạt động" }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ================= RIGHT SIDE ================= -->
+    <div class="right-section">
+      <!-- CONTACT FORM -->
+      <form
+        *ngIf="activeTab === 'contact'"
+        [formGroup]="profileForm"
+        class="profile-form"
+      >
+        <h3>Thông tin liên hệ</h3>
+        <div *ngFor="let f of fieldsContact">
+          <label>{{ f.label }}</label>
+          <input
+            [formControlName]="f.key"
+            [readonly]="editingContact?.locked"
+            [placeholder]="'Nhập ' + f.label.toLowerCase()"
+          />
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="button" (click)="save()">
+            💾 Lưu
+          </button>
+          <button
+            class="btn small"
+            type="button"
+            (click)="handleAction('delete', editingContact ?? undefined)"
+            [disabled]="!editingContact"
+          >
+            🗑️ Xóa
+          </button>
+          <button
+            class="btn small secondary"
+            type="button"
+            (click)="handleAction('lock', editingContact ?? undefined)"
+            [disabled]="!editingContact"
+          >
+            {{ editingContact?.locked ? "🔓 Mở khóa" : "🔒 Khóa" }}
+          </button>
+        </div>
+      </form>
+
+      <!-- COMPANY FORM -->
+      <form
+        *ngIf="activeTab === 'company'"
+        [formGroup]="profileForm"
+        class="profile-form"
+      >
+        <h3>Thông tin công ty</h3>
+        <div *ngFor="let f of fieldsCompany">
+          <label>{{ f.label }}</label>
+          <input
+            [formControlName]="f.key"
+            [readonly]="editingCompany?.locked"
+            [placeholder]="'Nhập ' + f.label.toLowerCase()"
+          />
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="button" (click)="save()">
+            💾 Lưu
+          </button>
+          <button
+            class="btn small"
+            type="button"
+            (click)="handleAction('delete', editingCompany ?? undefined)"
+            [disabled]="!editingCompany"
+          >
+            🗑️ Xóa
+          </button>
+          <button
+            class="btn small secondary"
+            type="button"
+            (click)="handleAction('lock', editingCompany ?? undefined)"
+            [disabled]="!editingCompany"
+          >
+            {{ editingCompany?.locked ? "🔓 Mở khóa" : "🔒 Khóa" }}
+          </button>
+        </div>
+      </form>
+
+      <!-- FILES -->
+      <!-- FILES -->
+      <div class="files">
+        <h4>Files</h4>
+
+        <!-- Hidden input để upload -->
+        <input
+          type="file"
+          #fileUpload
+          (change)="onFileSelected($event)"
+          multiple
+          hidden
+        />
+
+        <div class="file-actions">
+          <button class="btn small-1" (click)="fileUpload.click()">
+            📤 Tải lên
+          </button>
+          <button
+            class="btn small secondary"
+            *ngIf="files.length"
+            (click)="files = []"
+          >
+            🗑️ Xóa tất cả
+          </button>
+        </div>
+
+        <ul>
+          <li *ngFor="let f of files; let i = index">
+            {{ f.name }} ({{ f.size }}) - {{ f.time }}
+            <button (click)="removeFile(i)">❌</button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COMPANY INFO VIEW -->
+      <div
+        class="company-info"
+        *ngIf="activeTab === 'company' && editingCompany"
+      >
+        <h4>Chi tiết công ty</h4>
+        <div class="grid-2">
+          <div *ngFor="let f of fieldsCompany" class="form-group">
+            <label>{{ f.label }}</label>
+            <input [value]="editingCompany[f.key]" readonly />
+          </div>
+        </div>
+
+        <div class="tags">
+          <span class="tag">enterprise</span>
+          <span class="tag">vip</span>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary">Lưu</button>
+          <button class="btn small">Xóa</button>
+          <button class="btn small">Khóa</button>
+          <button class="btn small secondary">Hợp nhất</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

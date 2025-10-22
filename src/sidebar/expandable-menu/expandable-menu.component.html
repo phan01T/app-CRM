@@ -1,0 +1,38 @@
+<ul class="menu">
+  <li *ngFor="let it of items; trackBy: trackByLabel"
+      class="menu-item"
+      [class.has-children]="it.children?.length"
+      [class.open]="isOpen(it.label)">
+
+    <a *ngIf="!(it.children?.length)"
+       [routerLink]="it.route"
+       routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">
+      <span class="icon" [innerHTML]="iconsSafe[it.icon]"></span>
+      <span class="label" *ngIf="!isCollapsed">{{ it.label }}</span>
+      <span class="badge" *ngIf="it.badge && !isCollapsed">{{ it.badge }}</span>
+    </a>
+
+    <button *ngIf="(it.children?.length)"
+            type="button"
+            class="menu-toggle"
+            (click)="toggleGroup(it.label)"
+            [attr.aria-expanded]="isOpen(it.label)"
+            [attr.aria-controls]="'submenu-' + it.label">
+      <span class="icon" [innerHTML]="iconsSafe[it.icon]"></span>
+      <span class="label" *ngIf="!isCollapsed">{{ it.label }}</span>
+      <span class="chev" *ngIf="!isCollapsed" [class.rot]="isOpen(it.label)">&rsaquo;</span>
+    </button>
+
+    <ul class="submenu"
+        *ngIf="(it.children?.length) && isOpen(it.label) && !isCollapsed"
+        [id]="'submenu-' + it.label">
+      <li *ngFor="let ch of it.children; trackBy: trackByLabel">
+        <a [routerLink]="ch.route" routerLinkActive="active">
+          <span class="dot"></span>
+          <span class="label">{{ ch.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

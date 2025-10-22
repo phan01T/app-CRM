@@ -1,0 +1,109 @@
+<div class="support-filters">
+  <input
+    type="text"
+    [ngModel]="search()"
+    (ngModelChange)="search.set($event)"
+    placeholder="🔍 Search ticket..."
+  />
+
+  <select
+    [ngModel]="filterPriority()"
+    (ngModelChange)="filterPriority.set($event)"
+  >
+    <option value="All">All Priority</option>
+    <option value="High">High</option>
+    <option value="Normal">Normal</option>
+    <option value="Low">Low</option>
+  </select>
+
+  <select [ngModel]="filterStatus()" (ngModelChange)="filterStatus.set($event)">
+    <option value="All">All Status</option>
+    <option value="Open">Open</option>
+    <option value="Pending">Pending</option>
+    <option value="Escalated">Escalated</option>
+    <option value="Closed">Closed</option>
+  </select>
+</div>
+
+<table class="tickets-table">
+  <thead>
+    <tr>
+      <th>Requester</th>
+      <th>Subject</th>
+      <th>Owner</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let t of tickets()">
+      <td class="req">
+        <img [src]="t.avatar" />
+        <div>
+          <div class="name">{{ t.requester }}</div>
+          <div class="email">{{ t.email }}</div>
+        </div>
+      </td>
+      <td>{{ t.subject }}</td>
+      <td>{{ t.owner }}</td>
+      <td>
+        <span class="badge" [ngClass]="t.priority.toLowerCase()">{{
+          t.priority
+        }}</span>
+      </td>
+      <td>
+        <span class="status" [ngClass]="t.status.toLowerCase()">{{
+          t.status
+        }}</span>
+      </td>
+      <td><button class="del" (click)="deleteTicket(t.id)">🗑</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Create Ticket</h4>
+<form (ngSubmit)="addTicket()" class="create-form">
+  <div class="grid-2">
+    <input
+      [(ngModel)]="newTicket().requester"
+      name="requester"
+      placeholder="Requester name"
+    />
+    <input [(ngModel)]="newTicket().email" name="email" placeholder="Email" />
+  </div>
+
+  <input
+    [(ngModel)]="newTicket().subject"
+    name="subject"
+    placeholder="Subject"
+  />
+  <textarea
+    [(ngModel)]="newTicket().description"
+    name="description"
+    placeholder="Description"
+  ></textarea>
+
+  <div class="grid-3">
+    <select [(ngModel)]="newTicket().priority" name="priority">
+      <option>High</option>
+      <option>Normal</option>
+      <option>Low</option>
+    </select>
+    <select [(ngModel)]="newTicket().category" name="category">
+      <option>Invoices</option>
+      <option>Technical</option>
+      <option>Account</option>
+    </select>
+    <select [(ngModel)]="newTicket().status" name="status">
+      <option>Open</option>
+      <option>Pending</option>
+      <option>Escalated</option>
+      <option>Closed</option>
+    </select>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="btn-primary">Create</button>
+  </div>
+</form>

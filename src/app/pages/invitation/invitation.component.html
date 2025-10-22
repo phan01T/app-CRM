@@ -1,0 +1,81 @@
+<div class="sidepanel">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Thư mời</h2>
+    <ul class="menu">
+      <li [class.active]="activeTab === 'link'" (click)="setTab('link')">
+        Mời qua liên kết
+      </li>
+      <li [class.active]="activeTab === 'email'" (click)="setTab('email')">
+        Gửi thư mời bằng email
+      </li>
+      <li [class.active]="activeTab === 'sms'" (click)="setTab('sms')">
+        Mời qua SMS
+      </li>
+      <li [class.active]="activeTab === 'newuser'" (click)="setTab('newuser')">
+        Thêm người dùng mới
+      </li>
+    </ul>
+
+    <hr />
+
+    <ul class="menu light">
+      <li>Thêm vào nhóm làm việc</li>
+      <li>Mời đối tác Bitrix24</li>
+    </ul>
+
+    <div class="info-box">
+      <p>Số người dùng tối đa: <span class="highlight">không giới hạn</span></p>
+      <p>Đang dùng: <span class="highlight">1</span></p>
+    </div>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+    <div *ngIf="activeTab === 'link'">
+      <h3>Mời qua liên kết</h3>
+      <label
+        ><input type="checkbox" checked /> Cho phép đăng ký qua liên kết</label
+      >
+
+      <div class="department">
+        <label>Chọn phòng ban</label>
+        <div class="tags">
+          <span class="tag">Bitrix24 ✕</span>
+          <button class="btn small">+ Thêm</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary">SAO CHÉP ĐƯỜNG DẪN</button>
+        <a href="#">tạo một liên kết mới</a>
+      </div>
+
+      <label
+        ><input type="checkbox" /> Gửi yêu cầu tham gia cho quản trị viên</label
+      >
+    </div>
+
+    <div *ngIf="activeTab === 'email'">
+      <h3>Gửi thư mời bằng email</h3>
+      <input type="email" placeholder="Nhập email" />
+    </div>
+
+    <div *ngIf="activeTab === 'sms'">
+      <h3>Mời qua SMS</h3>
+      <input type="text" placeholder="Nhập số điện thoại" />
+    </div>
+
+    <div *ngIf="activeTab === 'newuser'">
+      <h3>Thêm người dùng mới</h3>
+      <input type="text" placeholder="Tên" />
+      <input type="text" placeholder="Họ" />
+      <input type="email" placeholder="Email" />
+    </div>
+
+    <div class="footer">
+      <button class="btn save">LƯU</button>
+      <button class="btn cancel">ĐÓNG</button>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,188 @@
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* ==============================
+   📥 NÚT NHẬP CSV
+============================== */
+.btn-import {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* ==============================
+   📄 PREVIEW CSV
+============================== */
+.csv-preview {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+
+    th,
+    td {
+      padding: 6px 8px;
+      border: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: #f3f4f6;
+      text-align: left;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+
+    .btn-confirm {
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      background: #e53935;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
+}
+
+/* ==============================
+   📧 NHÓM NGƯỜI NHẬN
+============================== */
+.sidebar {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+
+  .sidebar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    h3 {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .btn-add {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .add-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+
+    .input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .btn-save {
+      background: #22c55e;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .group-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 4px solid #ccc;
+      padding: 6px 10px;
+      margin-bottom: 6px;
+      background: #f8f9fa;
+      border-radius: 6px;
+
+      .group-name {
+        font-weight: 500;
+        font-size: 0.95rem;
+
+        small {
+          color: #777;
+        }
+      }
+
+      .btn-del {
+        background: none;
+        border: none;
+        color: #e53935;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .total {
+    margin-top: 12px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+/* ==============================
+   ✅ THÔNG BÁO KẾT QUẢ
+============================== */
+.import-result {
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #166534;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

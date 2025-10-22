@@ -1,0 +1,18 @@
+export const icons: Record<string, string> = {
+  grid: `<svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>`,
+  activity:`<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 7L9 5l-3 7H2"/></svg>`,
+  kanban:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="16" rx="2"/><rect x="14" y="4" width="7" height="10" rx="2"/></svg>`,
+  calendar:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`,
+  'users-plus':`<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>`,
+  users:`<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  building:`<svg viewBox="0 0 24 24"><path d="M3 21h18V3H3v18z"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M7 21v-3h10v3"/></svg>`,
+  megaphone:`<svg viewBox="0 0 24 24"><path d="M3 11v2a4 4 0 0 0 4 4h1l4 4v-8l8-3V6l-8-3v8H7a4 4 0 0 0-4 4z"/></svg>`,
+  list:`<svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>`,
+  chart:`<svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="5" width="3" height="13"/></svg>`,
+  mail:`<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>`,
+  gamepad:`<svg viewBox="0 0 24 24"><path d="M6 12h12"/><path d="M10 10v4"/><circle cx="17" cy="10" r="1"/><circle cx="17" cy="14" r="1"/></svg>`,
+  crown:`<svg viewBox="0 0 24 24"><path d="M2 7l5 5 5-8 5 8 5-5v10H2z"/></svg>`,
+  network:`<svg viewBox="0 0 24 24"><circle cx="12" cy="6" r="3"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M8 16l4-7 4 7"/></svg>`,
+  bot:`<svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 2v4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg>`,
+  report:`<svg viewBox="0 0 24 24"><path d="M7 3h8l5 5v13H7z"/><path d="M15 3v5h5"/></svg>`,
+};

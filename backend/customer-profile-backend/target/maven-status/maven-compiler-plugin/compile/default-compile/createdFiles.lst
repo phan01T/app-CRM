@@ -1,0 +1,9 @@
+com\example\customer_profile_backend\repository\CustomerProfileRepository.class
+com\example\customer_profile_backend\controller\CustomerProfileController.class
+com\example\customer_profile_backend\CustomerProfileBackendApplication.class
+com\example\customer_profile_backend\service\LeadService.class
+com\example\customer_profile_backend\entity\CustomerProfile.class
+com\example\customer_profile_backend\entity\Lead.class
+com\example\customer_profile_backend\service\CustomerProfileService.class
+com\example\customer_profile_backend\repository\LeadRepository.class
+com\example\customer_profile_backend\controller\LeadController.class
